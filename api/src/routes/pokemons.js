@@ -1,33 +1,33 @@
 const router = require('express').Router();
-//const { Pokemon, Tipo } = require('../models'); no son los modelos sino como van a ser   representados
+//const { Pokemon, Tipo } = require('../models'); no son los modelos sino las representaciones?
 const { Pokemon, Tipo } = require('../db.js');
 const axios = require('axios');
+const apipkadatos = require('./functions.js');
 
 router.get('/', async function(req,res){
-    const namedequery = req.query.name; 
+    const namedequery = req.query.name;
     if(namedequery) {
-        try {
-            let dbpokemon = await Pokemon.findAll({where: {name : namedequery}});
-            return res.status(302).send(dbpokemon);
-        } catch(err){
-            let response;
+        console.log(namedequery)
+        let dbpokemon = await Pokemon.findOne({where: {nombre: namedequery}})
+        if(dbpokemon !== null) return res.status(302).send(dbpokemon);
+        else {
             await axios({url: `https://pokeapi.co/api/v2/pokemon/${namedequery}`})
                 .then(resp => resp.data)
-                .then(datos => response = res.status(302).send(datos))
-                .catch(err => response = res.status(404).send({message: 'Pokemon no encontrado'}));
-            return response
+                .then(datos => res.status(302).send(apipkadatos(datos)))
+                .catch(err => res.status(404).send({message: 'Pokemon no encontrado'}));
         }
     }
+
     else {
     let pokemons20 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20'}).then(resp => resp.data);
     let pokemons40 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20'}).then(resp => resp.data);
     let pokemons = [...pokemons20.results, ...pokemons40.results];
-    //console.log(pokemons)
+    
     let subrequests = pokemons.map(e => new Promise (function(resolve,reject){ 
-            axios({url: e.url})
-            .then(resp => resp.data)
+            axios({url: e.url})/* 
+            .then(resp => resp.data) */
             .then(datos => {
-                let pokemonidapi = datos;
+                let pokemonidapi = datos.data;
                 const { id, name } = pokemonidapi;
                 const imgurl = pokemonidapi.sprites.front_shiny;
                 let tipos = [];
@@ -89,31 +89,20 @@ router.post('/', async function(req,res){
 
 router.get('/:idPokemon', async function(req,res){
     if(req.params){
-    const { idPokemon } = req.params;
-    try {
-        let pokemoniddb = await Pokemon.findByPk(idPokemon);
-        if(pokemoniddb.length < 1) throw Error;
-        res.status(302).send(pokemoniddb);
-    } catch(err){
-        let pokemonidapi = await axios({url: `https://pokeapi.co/api/v2/pokemon/${idPokemon}`})
-            .then(resp => resp.data)
-            .catch(err => res.status(404).send({message: 'Pokemon no existente'}));
-        
-        const { id, name, height: altura, weight: peso } = pokemonidapi;
-        
-        let stats = [];
-        pokemonidapi.stats.forEach(e => stats.push(e.base_stat));
-        const [ vida, fuerza, defensa,,, velocidad ] = [ ...stats ];
-        const imgurl = pokemonidapi.sprites.front_shiny;
-        
-        let tipos = [];
-        pokemonidapi.types.forEach(e => tipos.push(e.type.name));
-
-        const response = { id, name, altura, peso, vida, fuerza, defensa, velocidad, imgurl, tipos };
-        res.status(302).send(response);
+        const { idPokemon } = req.params;
+        try {
+            let pokemoniddb = await Pokemon.findByPk(idPokemon);
+            if(pokemoniddb.length < 1) throw Error;
+            res.status(302).send(pokemoniddb);
+        }
+        catch(err){
+            await axios({url: `https://pokeapi.co/api/v2/pokemon/${idPokemon}`})
+              .then(resp => resp.data)
+              .then(datos => res.status(302).send(apipkadatos(datos)))
+              .catch(err => res.status(404).send({message: 'Pokemon no existente'}));
+        }
     }
-    }
-})
+});
 
 /* Ruta de detalle de Pokemon: debe contener
 

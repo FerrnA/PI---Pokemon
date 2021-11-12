@@ -38,3 +38,54 @@ let subrequest = pokemons.forEach(e => () => {
 let pokemonesSubR = await Promise.all(subrequest);
 
 res.status(200).send(pokemonesSubR); */
+
+
+
+/pokemons?name..
+
+if(namedequery) {
+        try {
+            const dbpokemon = await Pokemon.findOne({where: {nombre: namedequery}});
+            console.log(dbpokemon);
+            return res.status(302).send(dbpokemon);
+        } catch(err){
+            let response;
+            console.log(namedequery)
+            await axios({url: `https://pokeapi.co/api/v2/pokemon/${namedequery}`})
+                .then(resp => resp.data)
+                .then(datos => response = res.status(302).send(datos))
+                .catch(err => response = res.status(404).send({message: 'Pokemon no encontrado'}));
+            return response;
+        }
+    }
+
+
+
+router.get('/:idPokemon', async function(req,res){
+    if(req.params){
+    const { idPokemon } = req.params;
+    try {
+        let pokemoniddb = await Pokemon.findByPk(idPokemon);
+        if(pokemoniddb.length < 1) throw Error;
+        res.status(302).send(pokemoniddb);
+    } catch(err){
+        /* let pokemonidapi =  */await axios({url: `https://pokeapi.co/api/v2/pokemon/${idPokemon}`})
+            .then(resp => resp.data)
+               .then(datos => res.status(302).send(apipkadatos(datos))) 
+            .catch(err => res.status(404).send({message: 'Pokemon no existente'}));
+        
+        /* const { id, name, height: altura, weight: peso } = pokemonidapi;
+        
+        let stats = [];
+        pokemonidapi.stats.forEach(e => stats.push(e.base_stat));
+        const [ vida, fuerza, defensa,,, velocidad ] = [ ...stats ];
+        const imgurl = pokemonidapi.sprites.front_shiny;
+        
+        let tipos = [];
+        pokemonidapi.types.forEach(e => tipos.push(e.type.name));
+
+        const response = { id, name, altura, peso, vida, fuerza, defensa, velocidad, imgurl, tipos };
+        res.status(302).send(response); */
+    }
+    }
+})
