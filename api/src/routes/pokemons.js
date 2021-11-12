@@ -1,6 +1,6 @@
 const router = require('express').Router();
 //const { Pokemon, Tipo } = require('../models'); no son los modelos sino como van a ser   representados
-const { Pokemon } = require('../db.js');
+const { Pokemon, Tipo } = require('../db.js');
 const axios = require('axios');
 
 router.get('/', async function(req,res){
@@ -22,9 +22,9 @@ router.get('/', async function(req,res){
     let pokemons20 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20'}).then(resp => resp.data);
     let pokemons40 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20'}).then(resp => resp.data);
     let pokemons = [...pokemons20.results, ...pokemons40.results];
-    
-    let subrequests = pokemons.map(e => async function (){ 
-        await axios({url: `${e.url}`})
+    //console.log(pokemons)
+    let subrequests = pokemons.map(e => new Promise (function(resolve,reject){ 
+            axios({url: e.url})
             .then(resp => resp.data)
             .then(datos => {
                 let pokemonidapi = datos;
@@ -34,8 +34,9 @@ router.get('/', async function(req,res){
                 pokemonidapi.types.forEach(e => tipos.push(e.type.name));
                 const response = { id, name, imgurl, tipos };
                 return response;
-            });
-    });
+            })
+            .then(response => resolve(response));
+    }));
     let pokemonesSubR = await Promise.all(subrequests);
     res.status(200).send(pokemonesSubR);
     }
@@ -57,7 +58,9 @@ mostrando los primeros 9 en la primer pagina. */
 
 router.post('/', async function(req,res){
     const { nombre, vida, fuerza, defensa, velocidad, altura, peso, imgurl, tipos } = req.body;
-    if(!nombre) return res.status(403).send({message: 'Nombre requerido'});
+    if(typeof nombre !== 'string') return res.status(403).send({message: 'Nombre requerido'});
+    //console.log(nombre);
+
     const pokemoncreado = await Pokemon.create({
         nombre,
         vida,
@@ -68,9 +71,21 @@ router.post('/', async function(req,res){
         peso,
         imgurl
     });
-    if(tipos) await pokemoncreado.addTipos(tipos);
-    res.status(201).send({message: 'Pokemon creado'}) 
+    if(tipos) {
+        if(tipos.length === 1) {
+            const tiposdb = await Tipo.findOne({ where: {name: tipos[0]} });
+            //console.log(tiposdb);
+            await pokemoncreado.addTipo([tiposdb]);
+        }
+        else {
+          const tiposFind = tipos.map(t => Tipo.findOne({ where: {name: t} }));
+          const tiposdb = await Promise.all(tiposFind);
+          await pokemoncreado.addTipos(tiposdb);
+        }
+    }
+    res.status(201).send({message: 'Pokemon creado', pokemoncreado}) 
 })
+
 
 router.get('/:idPokemon', async function(req,res){
     if(req.params){
@@ -86,16 +101,16 @@ router.get('/:idPokemon', async function(req,res){
         
         const { id, name, height: altura, weight: peso } = pokemonidapi;
         
-        let stats;
+        let stats = [];
         pokemonidapi.stats.forEach(e => stats.push(e.base_stat));
         const [ vida, fuerza, defensa,,, velocidad ] = [ ...stats ];
         const imgurl = pokemonidapi.sprites.front_shiny;
         
-        let tipos;
+        let tipos = [];
         pokemonidapi.types.forEach(e => tipos.push(e.type.name));
 
         const response = { id, name, altura, peso, vida, fuerza, defensa, velocidad, imgurl, tipos };
-        res.status(302).send({message: 'Pokemon encontrado' }, response);
+        res.status(302).send(response);
     }
     }
 })

@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     ID: {
       type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     },
     nombre: {
       type: DataTypes.STRING,
@@ -31,12 +31,13 @@ module.exports = (sequelize) => {
     peso: {
       type: DataTypes.FLOAT
     },
-    img: {
+    imgurl: {
       type: DataTypes.STRING
     }
   },
   {
-    initialAutoIncrement: 1119,
+    timestamps: false,
+    initialAutoIncrement: 1119
   }
   );
 };
