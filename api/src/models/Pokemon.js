@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
-    ID: {
+    id: {
       type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -36,8 +36,7 @@ module.exports = (sequelize) => {
     }
   },
   {
-    timestamps: false,
-    initialAutoIncrement: 1119
+    timestamps: false
   }
   );
 };

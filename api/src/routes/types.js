@@ -4,7 +4,7 @@ const { Pokemon, Tipo } = require('../db.js');
 
 router.get('/', async function(req,res){
     let tiposdb = await Tipo.findAll();
-    res.status(302).send(tiposdb);
+    res.status(200).send(tiposdb);
 });
 
 module.exports = router;

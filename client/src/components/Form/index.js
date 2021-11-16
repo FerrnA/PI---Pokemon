@@ -1,0 +1,116 @@
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getTypes, createPokemon } from '../../actions/index';
+
+
+let statuscero = {
+    nombre: '',
+    fuerza: '',
+    defensa: '',
+    vida: '',
+    velocidad: '',
+    altura: '',
+    peso: '',
+    tipos: [],
+    imgurl: ''
+};
+
+export default function Form(){
+  const [status, setStatus] = useState(statuscero);
+  const dispatch = useDispatch();
+  let types = useSelector((state) => state.types);
+
+  useEffect(()=> {
+    dispatch(getTypes());
+  },[dispatch])
+
+  function handleChange(e) {
+    const value = e.target.value;
+    const name = e.target.name;
+    if(name === 'tipos'){
+      if(!status.tipos.includes(e.target.value)){
+        setStatus({
+          ...status,
+          tipos: [...status.tipos, e.target.value]
+        })
+      }
+    }
+    else setStatus({
+      ...status,
+      [name]: value
+    });
+  }
+  
+  function handleSubmit(e) {
+      e.preventDefault();
+      if(status.nombre.length !== 0){
+        dispatch(createPokemon(status));
+        setStatus(statuscero);
+        alert('Pokemon creado!');
+      }
+      else alert('Es necesario un nombre!')
+  }
+  //tipos: [...(status.tipos.splice((status.tipos.findIndex(e => e === el.target.key)),1))]
+  function handleButtonClick(el, t) {
+    el.preventDefault();
+    setStatus({
+      ...status,
+      tipos: [...(status.tipos.filter(e => e !== t))]
+    });
+  }
+  
+  return (
+    <div>
+      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
+        <div>
+          <label>Nombre:</label>
+          <input type='text' name='nombre' value={status.nombre} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Fuerza:</label>
+          <input type='text' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Defensa:</label>
+          <input type='text' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Vida:</label>
+          <input type='text' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Velocidad:</label>
+          <input type='text' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Altura:</label>
+          <input type='text' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Peso:</label>
+          <input type='text' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
+        </div>
+        <div>
+          <label>Imagen:</label>
+          <input type='text' name='imgurl' value={status.imgurl} onChange={(e) => handleChange(e)}/>
+        </div>
+
+        <select name='tipos' defaultValue="" onChange={(e) => handleChange(e)}>{/* 
+        <option value="default" selected disabled hidden></option> */}
+        <option></option>
+       { types.length && types.map( t => <option value={t.name}>{t.name}</option> ) }
+        </select>
+        <ul>
+       { status.tipos.length > 0 && status.tipos.map(t => 
+          <div>  
+            <li key={t}>{t}</li>
+            <button type='button' onClick={(e)=> handleButtonClick(e, t)}>0</button>
+          </div>
+       )}
+        </ul>
+
+        <button type='submit' onClick={(e) => handleSubmit(e)} >Submit</button>
+      </form>
+    </div>
+    )
+}

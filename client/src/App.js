@@ -1,10 +1,23 @@
+import React from 'react';
 import './App.css';
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import NavBar from './components/NavBar/NavBar';
+var Form = require('./components/Form/index.js').default;
+var PokemonData = require('./components/PokemonData/PokemonData.js').default;
+//var Tipos = require('./components/Tipos/Tipos.js').default;
+var Home = require('./components/Home/index.js').default;
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Pokemon</h1>
-    </div>
+    <Router>
+      <NavBar path="/home"/>
+    <Routes>
+      <Route path="/home" element={<Home/>}/>
+      {/* <Route path="/types" element={<Tipos/>}/> */}
+      <Route path={`/home/pokemons/:pokemonID`} render={({match}) => <PokemonData pokemonid={match.params.pokemonID}/>} />
+      <Route path="/home/crea" element={<Form/>}/>
+    </Routes>
+    </Router>
   );
 }
 
