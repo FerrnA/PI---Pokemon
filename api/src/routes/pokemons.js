@@ -4,6 +4,7 @@ const { Pokemon, Tipo } = require('../db.js');
 const axios = require('axios');
 const apipkadatos = require('./functions.js');
 
+const { Sequelize } = require('sequelize');
 // 302 response code is invalid or error for axios
 
 router.get('/', async function(req,res){
@@ -51,7 +52,24 @@ router.get('/', async function(req,res){
     }));
     // +pokemones de la base de datos
     let pokemonesSubR = await Promise.all(subrequests);
-    let dbpokemons = await Pokemon.findAll();
+    /* let dbpokemons = await Pokemon.findAll({
+        raw:true,
+        attributes: {
+        include: [Sequelize.col('tipos'), 'name']
+        },
+        include: [{
+            model: Tipo,
+            required: false,
+            as: 'tipos',
+            attributes: []
+        }]
+    }); */
+    let dbpokemons = await Pokemon.findAll({
+        include: { model: Tipo, required: true, attributes: ['name']}
+    });
+    dbpokemons.forEach(p=>p.dataValues.tipos = p.dataValues.tipos.map(tn=> tn.name))//-----x tipos : [{name: 'normal',...},{},{}]----//
+    dbpokemons = dbpokemons.map(p=> p.dataValues)//-----x tipos : [{name: 'normal',...},{},{}]----//
+    
     if(dbpokemons) pokemonesSubR = pokemonesSubR.concat(dbpokemons);
     res.status(200).send(pokemonesSubR);
     }
@@ -60,12 +78,12 @@ router.get('/', async function(req,res){
 
 var ID = 1200;
 router.post('/', async function(req,res){
-    const { nombre, vida, fuerza, defensa, velocidad, altura, peso, imgurl, tipos } = req.body;
-    if(typeof nombre !== 'string') return res.status(403).send({message: 'Nombre requerido'});
-    //console.log(nombre);
+    const { name, vida, fuerza, defensa, velocidad, altura, peso, imgurl, tipos } = req.body;
+    if(typeof name !== 'string') return res.status(403).send({message: 'Nombre requerido'});
+    
     const pokemoncreado = await Pokemon.create({
         id: ID,
-        nombre,
+        name,
         vida,
         fuerza,
         defensa,
@@ -87,7 +105,7 @@ router.post('/', async function(req,res){
           await pokemoncreado.addTipos(tiposdb);
         }
     }
-    res.status(201).send({message: 'Pokemon creado', pokemoncreado}) 
+    res.status(201).send({message: 'Pokemon creado', pokemoncreado, tipos}) 
 })
 
 

@@ -4,7 +4,7 @@ import { getTypes, createPokemon } from '../../actions/index';
 
 
 let statuscero = {
-    nombre: '',
+    name: '',
     fuerza: '',
     defensa: '',
     vida: '',
@@ -26,8 +26,8 @@ export default function Form(){
 
   function handleChange(e) {
     const value = e.target.value;
-    const name = e.target.name;
-    if(name === 'tipos'){
+    const named = e.target.name;
+    if(named === 'tipos'){
       if(!status.tipos.includes(e.target.value)){
         setStatus({
           ...status,
@@ -37,20 +37,20 @@ export default function Form(){
     }
     else setStatus({
       ...status,
-      [name]: value
+      [named]: value
     });
   }
   
   function handleSubmit(e) {
       e.preventDefault();
-      if(status.nombre.length !== 0){
+      if(status.name.length !== 0){
         dispatch(createPokemon(status));
         setStatus(statuscero);
         alert('Pokemon creado!');
       }
       else alert('Es necesario un nombre!')
   }
-  //tipos: [...(status.tipos.splice((status.tipos.findIndex(e => e === el.target.key)),1))]
+  
   function handleButtonClick(el, t) {
     el.preventDefault();
     setStatus({
@@ -64,7 +64,7 @@ export default function Form(){
       <form style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
         <div>
           <label>Nombre:</label>
-          <input type='text' name='nombre' value={status.nombre} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='name' value={status.name} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Fuerza:</label>

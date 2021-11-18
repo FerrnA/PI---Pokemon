@@ -9,7 +9,7 @@ const initialState = {
 const rootReducer = function(state=initialState, action) {
     switch(action.type) {
         case 'ADD_POKEMONCREADO':
-            return {...state, pokemonscreados: [...state.pokemonscreados, action.payload.pokemoncreado]}
+            return {...state, pokemonscreados: [...state.pokemonscreados,{...action.payload.pokemoncreado, tipos: action.payload.tipos}]}
         case 'POKEMON_DETAILS':
             return {...state, pokemonData: [...action.payload]}
         case 'ADD_POKEMONS':
