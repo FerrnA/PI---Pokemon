@@ -4,14 +4,15 @@ const { Pokemon, Tipo } = require('../db.js');
 const axios = require('axios');
 const apipkadatos = require('./functions.js');
 
-const { Sequelize } = require('sequelize');
+//const { Sequelize } = require('sequelize');
+
 // 302 response code is invalid or error for axios
 
 router.get('/', async function(req,res){
     const namedequery = req.query.name;
     if(namedequery) {
         console.log(namedequery)
-        let dbpokemon = await Pokemon.findOne({where: {nombre: namedequery}})
+        let dbpokemon = await Pokemon.findOne({where: {name: namedequery}})
         if(dbpokemon !== null) return res.status(200).send(dbpokemon);
         else {
             await axios({url: `https://pokeapi.co/api/v2/pokemon/${namedequery}`})

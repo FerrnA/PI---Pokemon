@@ -1,11 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default function Card({ nombre, imgurl, tipos }){
+export default function Card({ nombre, imgurl, tipos, Id }){
+  
+
     return (
         <div>
           <ul>
-            <li>Nombre: {nombre}</li>
-            {<li>Tipo/s: 
+            <li>Name: {nombre}</li>
+            <NavLink to={`/home/pokemons/${Id}`}>Details</NavLink>
+            {<li>Type/s: 
                 <ul>
                     {tipos && tipos.map(p => <li>{p}</li>)}
                 </ul>

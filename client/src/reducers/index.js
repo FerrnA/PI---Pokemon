@@ -11,7 +11,7 @@ const rootReducer = function(state=initialState, action) {
         case 'ADD_POKEMONCREADO':
             return {...state, pokemonscreados: [...state.pokemonscreados,{...action.payload.pokemoncreado, tipos: action.payload.tipos}]}
         case 'POKEMON_DETAILS':
-            return {...state, pokemonData: [...action.payload]}
+            return {...state, pokemonData: action.payload}
         case 'ADD_POKEMONS':
             return {...state, pokemons: [...action.payload]}
         case 'ADD_TYPES':

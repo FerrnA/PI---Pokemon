@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
-import { mergeSort, merge } from './mergeFunction';
+import { mergeSort } from './mergeFunction';
 
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
 
     const [estadoFiltro, setEstadoFiltro] = useState('');
     const [currentPage, setCurrentpage] = useState(1);
-    const [pokemonesPorpagina, setPokemonesPorpagina] = useState(12);
+    const pokemonesPorpagina = 12; //const [pokemonesPorpagina, setPokemonesPorpagina] = useState(12);
     const indiceR = pokemonesPorpagina * currentPage;
     const indiceL = indiceR - pokemonesPorpagina;
     const pokemonsOfPagina = (() => {
@@ -59,15 +59,16 @@ export default function Home() {
             return pokemonesSortedF.slice(indiceL-3, indiceR-3);
         }
     })();
-    function handleChange(e){
+    function handleChangeSc(e){
         e.preventDefault();
         if(e.target.value === 'Pokemones creados'){
             setEstadoFiltro('Pokemones creados')
         }
     }
     //types
-    function handleChange2(e) {
+    function handleChangeSt(e) {
         setEstadoFiltro('Filtrado por Tipos')
+        if(e.target.value === '') return
         if(!estadoTiposselect.includes(e.target.value)){
           setEstadoTiposselect([
             ...estadoTiposselect, e.target.value
@@ -95,15 +96,16 @@ export default function Home() {
     }
     //sort
 
+
     return (
         <div>
           <div>
-              <select name='tipos y creados' defaultValue="" onChange={(e) => handleChange(e)}>
+              <select name='selectDecreados' defaultValue="" onChange={(e) => handleChangeSc(e)}>
                   <option ></option>
                   <option value='Pokemones creados'>Pokemones creados</option>
               </select>
               <div>
-                  <select name='tipos' defaultValue="" onChange={(e) => handleChange2(e)}>Tipos de pokemon
+                  <select name='selectDetipos' defaultValue="" onChange={(e) => handleChangeSt(e)}>Tipos de pokemon
                     <option></option>
                     { types.length && types.map( t => <option value={t.name}>{t.name}</option>) }
                   </select>
@@ -115,7 +117,7 @@ export default function Home() {
                     </div>) }
                   </ul>
               </div>
-              <select name='sort' defaultValue="" onChange={(e) => handleChangeSort(e)}>
+              <select name='selectDeSort' defaultValue="" onChange={(e) => handleChangeSort(e)}>
                   <option></option>
                   <option value='Sort by strength'>Fuerza</option>
                   <option value='Sort by alphabet'>Alfabeticamente</option>
@@ -131,7 +133,7 @@ export default function Home() {
                 pokemones={pokemones.length}
                 setCurrentPage={setCurrentpage}
             />
-            {pokemonsOfPagina && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos}/>)}
+            {pokemonsOfPagina && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
           </div>
         </div>
     )

@@ -9,13 +9,13 @@ export default function Paginado({pokemonesPorpagina, pokemones, setCurrentPage}
 
     return (
         <div>
-            <ul>
+            
                 {numberpages && numberpages.map(n=> (
-                    <li>
-                        <a onClick={()=> setCurrentPage(n)}>{n}</a>
-                    </li>
+                    
+                        <button type='button' onClick={()=> setCurrentPage(n)}>{n}</button>
+                    
                 ))}
-            </ul>
+            
         </div>
     )
 }
