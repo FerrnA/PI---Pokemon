@@ -44,6 +44,7 @@ function mergeSort(array, condicion) {
     return array;
 }
 
+
 module.exports = {
     mergeSort,
     merge

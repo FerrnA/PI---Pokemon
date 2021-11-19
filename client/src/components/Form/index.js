@@ -5,12 +5,12 @@ import { getTypes, createPokemon } from '../../actions/index';
 
 let statuscero = {
     name: '',
-    fuerza: '',
-    defensa: '',
-    vida: '',
-    velocidad: '',
-    altura: '',
-    peso: '',
+    fuerza: null,
+    defensa: null,
+    vida: null,
+    velocidad: null,
+    altura: null,
+    peso: null,
     tipos: [],
     imgurl: ''
 };
@@ -68,27 +68,27 @@ export default function Form(){
         </div>
         <div>
           <label>Fuerza:</label>
-          <input type='text' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Defensa:</label>
-          <input type='text' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Vida:</label>
-          <input type='text' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Velocidad:</label>
-          <input type='text' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Altura:</label>
-          <input type='text' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Peso:</label>
-          <input type='text' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
+          <input type='number' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Imagen:</label>

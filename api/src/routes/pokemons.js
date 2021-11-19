@@ -1,10 +1,7 @@
 const router = require('express').Router();
-//const { Pokemon, Tipo } = require('../models'); no son los modelos sino las representaciones?
 const { Pokemon, Tipo } = require('../db.js');
 const axios = require('axios');
 const apipkadatos = require('./functions.js');
-
-//const { Sequelize } = require('sequelize');
 
 // 302 response code is invalid or error for axios
 
@@ -37,8 +34,7 @@ router.get('/', async function(req,res){
     pokemons = [...pokemons[0].results, ...pokemons[1].results];
 
     let subrequests = pokemons.map(e => new Promise (function(resolve,reject){ 
-            axios({url: e.url})/* 
-            .then(resp => resp.data) */
+            axios({url: e.url})
             .then(datos => {
                 let pokemonidapi = datos.data;
                 const { id, name } = pokemonidapi;
@@ -53,25 +49,17 @@ router.get('/', async function(req,res){
     }));
     // +pokemones de la base de datos
     let pokemonesSubR = await Promise.all(subrequests);
-    /* let dbpokemons = await Pokemon.findAll({
-        raw:true,
-        attributes: {
-        include: [Sequelize.col('tipos'), 'name']
-        },
-        include: [{
-            model: Tipo,
-            required: false,
-            as: 'tipos',
-            attributes: []
-        }]
-    }); */
+
     let dbpokemons = await Pokemon.findAll({
-        include: { model: Tipo, required: true, attributes: ['name']}
+        include: { model: Tipo, required: false, attributes: ['name']}
     });
-    dbpokemons.forEach(p=>p.dataValues.tipos = p.dataValues.tipos.map(tn=> tn.name))//-----x tipos : [{name: 'normal',...},{},{}]----//
-    dbpokemons = dbpokemons.map(p=> p.dataValues)//-----x tipos : [{name: 'normal',...},{},{}]----//
-    
-    if(dbpokemons) pokemonesSubR = pokemonesSubR.concat(dbpokemons);
+    if(dbpokemons){
+        dbpokemons.forEach(p=>p.dataValues.tipos = p.dataValues.tipos.map(tn=> tn.name))//-----x tipos : [{name: 'normal',...},{},{}]----//
+        dbpokemons = dbpokemons.map(p=> p.dataValues)//-----x tipos : [{name: 'normal',...},{},{}]----//
+        dbpokemons = dbpokemons.map(p=> { return { id: p.id, name: p.name, imgurl: p.imgurl, tipos: p.tipos, fuerza: p.fuerza } }) //--- Solo lo que necesita el < Home />
+        pokemonesSubR = pokemonesSubR.concat(dbpokemons);
+    }
+
     res.status(200).send(pokemonesSubR);
     }
 });
@@ -97,7 +85,6 @@ router.post('/', async function(req,res){
     if(tipos) {
         if(tipos.length === 1) {
             const tiposdb = await Tipo.findOne({ where: {name: tipos[0]} });
-            //console.log(tiposdb);
             await pokemoncreado.addTipo([tiposdb]);
         }
         else {
@@ -108,7 +95,6 @@ router.post('/', async function(req,res){
     }
     res.status(201).send({message: 'Pokemon creado', pokemoncreado, tipos}) 
 })
-
 
 router.get('/:idPokemon', async function(req,res){
     if(req.params){
@@ -126,6 +112,5 @@ router.get('/:idPokemon', async function(req,res){
         }
     }
 });
-
 
 module.exports = router;
