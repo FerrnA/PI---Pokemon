@@ -3,10 +3,11 @@ import React from "react";
 
 export default function Paginado({pokemonesPorpagina, pokemones, setCurrentPage}){
     let numberpages = [];
-    for(let i = 0; i < Math.ceil(pokemones/pokemonesPorpagina); i++){
-        numberpages.push(i+1)
+    if(pokemones !== 0){
+        for(let i = 0; i < Math.ceil((pokemones+3)/pokemonesPorpagina); i++){
+            numberpages.push(i+1)
+        }
     }
-
     return (
         <div>
             

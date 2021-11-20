@@ -5,12 +5,12 @@ import { getTypes, createPokemon } from '../../actions/index';
 
 let statuscero = {
     name: '',
-    fuerza: null,
-    defensa: null,
-    vida: null,
-    velocidad: null,
-    altura: null,
-    peso: null,
+    fuerza: '',
+    defensa: '',
+    vida: '',
+    velocidad: '',
+    altura: '',
+    peso: '',
     tipos: [],
     imgurl: ''
 };
@@ -25,13 +25,14 @@ export default function Form(){
   },[dispatch])
 
   function handleChange(e) {
-    const value = e.target.value;
+    let value = e.target.value;
     const named = e.target.name;
+    if(named !== 'name' && named !== 'tipos') value = value.replace(/[a-zA-Z]+/,'');
     if(named === 'tipos'){
-      if(!status.tipos.includes(e.target.value)){
+      if(!status.tipos.includes(value)){
         setStatus({
           ...status,
-          tipos: [...status.tipos, e.target.value]
+          tipos: [...status.tipos, value]
         })
       }
     }
@@ -41,10 +42,21 @@ export default function Form(){
     });
   }
   
+  function clean(objstatus) {
+    let cleanobj = {};
+    for (var prop in objstatus) {
+      if (objstatus[prop] !== '') {
+        cleanobj[prop] = objstatus[prop];
+      }
+    }
+    return cleanobj
+  }
   function handleSubmit(e) {
       e.preventDefault();
       if(status.name.length !== 0){
-        dispatch(createPokemon(status));
+        //let o = Object.fromEntries(Object.entries(status).filter(([_, v]) => v != ''));
+        let cleaned = clean(status);
+        dispatch(createPokemon(cleaned));
         setStatus(statuscero);
         alert('Pokemon creado!');
       }
@@ -68,27 +80,27 @@ export default function Form(){
         </div>
         <div>
           <label>Fuerza:</label>
-          <input type='number' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Defensa:</label>
-          <input type='number' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Vida:</label>
-          <input type='number' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Velocidad:</label>
-          <input type='number' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Altura:</label>
-          <input type='number' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Peso:</label>
-          <input type='number' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
+          <input type='text' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
           <label>Imagen:</label>

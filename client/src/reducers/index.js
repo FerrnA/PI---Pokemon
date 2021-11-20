@@ -3,7 +3,8 @@ const initialState = {
     types: [],
     pokemons: [],
     pokemonscreados: [],
-    pokemonData: []
+    pokemonData: [],
+    message: ""
 }
 
 const rootReducer = function(state=initialState, action) {
@@ -23,7 +24,7 @@ const rootReducer = function(state=initialState, action) {
             return {...state, pokemons: [action.payload]}
         case 'POKEMON_NO_ENCONTRADO':
             console.log(action.payload)
-            return state
+            return {...state, pokemons: "Pokemon no encontrado"}
         default:
             return state;
     }

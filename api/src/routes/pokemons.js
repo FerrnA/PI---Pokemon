@@ -100,9 +100,12 @@ router.get('/:idPokemon', async function(req,res){
     if(req.params){
         const { idPokemon } = req.params;
         try {
-            let pokemoniddb = await Pokemon.findByPk(idPokemon);
+            let pokemoniddb = await Pokemon.findByPk( idPokemon, {
+                include: {model: Tipo, required: false, attributes: ['name']} //table types
+            })
             if(pokemoniddb.length < 1) throw Error;
-            res.status(200).send(pokemoniddb);
+            pokemoniddb.dataValues.tipos = pokemoniddb.dataValues.tipos.map(tn=> tn.dataValues.name)
+            res.status(200).send(pokemoniddb.dataValues);
         }
         catch(err){
             await axios({url: `https://pokeapi.co/api/v2/pokemon/${idPokemon}`})
