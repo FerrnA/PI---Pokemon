@@ -1,0 +1,27 @@
+.ad {
+    width: 99vw;
+    height: 97vh;
+    background-image: url("./backgroundpikachu.png");
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.divpokeball {
+    width: 300px;
+    height: 300px;
+    margin-right: 5em;
+    background-image: url("./pokeballgifframe0.gif");
+    background-size: cover;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+.divpokeball:hover {
+    background-image: url("./pokeball.gif");
+    cursor: pointer;
+}

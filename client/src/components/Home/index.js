@@ -216,10 +216,9 @@ export default function Home() {
                         pokemonesPorpagina={pokemonesPorpagina}
                         pokemones={length}
                         setCurrentPage={setCurrentpage} />}
-                    {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} alt=""/>}
                 </div>
                 <div className={h.cards}>
-                    {}
+                    {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} style={{height: '10em', marginTop:'10em'}} alt=""/>}
                     {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
                     {typeof pokemonsOfPagina === "object" && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
                 </div>

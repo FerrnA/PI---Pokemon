@@ -2,7 +2,7 @@ import React from 'react';
 //import './App.css';
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import NavBar from './components/NavBar/NavBar';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/LandingPage/LandingPage.js';
 var Form = require('./components/Form/index.js').default;
 var PokemonData = require('./components/PokemonData/index.js').default;
 var Tipos = require('./components/Tipos/Tipos.js').default;
