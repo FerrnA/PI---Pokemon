@@ -5,7 +5,8 @@ import Card from './Card';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
 import { mergeSort } from './mergeFunction';
-import spinner from './Spinner2.gif';
+import spinner from './gifBulbasaur.gif';
+import h from './index.module.css';
 
 
 export default function Home() {
@@ -171,47 +172,57 @@ export default function Home() {
 
 
     return (
-        <div>
-            <div>
-                <select name='selectDecreados' ref={selectCreated} defaultValue="" onChange={(e) => handleChangeSc(e)}>
-                    <option ></option>
-                    <option value='Pokemones creados'>Pokemones creados</option>
-                    <option value='Sin pokemones creados'>Sin pokemones creados</option>
-                </select>
-                <div>
-                    <select name='selectDetipos' ref={selectTypes} defaultValue="" onChange={(e) => handleChangeSt(e)}>Tipos de pokemon
-                        <option></option>
-                        {types.length && types.map( t => <option value={t.name}>{t.name}</option>)}
+        <div className={h.hom}>
+            <div name='divSelects' className={h.divSelects}>
+                <div> 
+                    <label>&emsp;Search by Created&ensp;</label>
+                    <select name='selectDecreados' ref={selectCreated} defaultValue="" onChange={(e) => handleChangeSc(e)}>
+                        <option ></option>
+                        <option value='Pokemones creados'>Pokemones creados</option>
+                        <option value='Sin pokemones creados'>Sin pokemones creados</option>
                     </select>
-                    <ul>
+                </div>
+                <div>
+                    <label>&emsp;Search by Pokemon types&ensp;</label>
+                    <select name='selectDetipos' ref={selectTypes} defaultValue="" onChange={(e) => handleChangeSt(e)}>Tipos de pokemon
+                            <option></option>
+                            {types.length && types.map( t => <option value={t.name}>{t.name}</option>)}
+                    </select>
+                    <ul className={h.tiposselecc}>
                         {estadoTiposselect.length > 0 && estadoTiposselect.map(t => 
-                        <div>  
-                            <li key={t}>{t}</li>
-                            <button type='button' onClick={(e)=> handleButtonClick(e, t)}>0</button>
-                        </div>)}
+                        <p key={t}>
+                        <button type='button' className={h.botonTipos} onClick={(e)=> handleButtonClick(e, t)}></button>{t}</p>
+                        )}
                     </ul>
                 </div>
-                <select name="selectDeSort" ref={selectSort} defaultValue="" onChange={(e) => handleChangeSort(e)}>
-                    <option></option>
-                    <option value='Sort by strength'>Fuerza</option>
-                    <option value='Sort by alphabet'>Alfabeticamente</option>
-                </select>
-                <button id="buttonSort" type='button' onClick={(e) => handleChangeSort(e, selectSort.current.value)}>↑↓</button>
-                <button onClick={() => {dispatch(getPokemons()); setEstadoFiltro(''); setCurrentpage(1)}}>Get pokemons</button>
+                <div>
+                    <label>&emsp;Sort by&ensp;</label>
+                    <select name="selectDeSort" ref={selectSort} defaultValue="" onChange={(e) => handleChangeSort(e)}>
+                        <option></option>
+                        <option value='Sort by strength'>Fuerza</option>
+                        <option value='Sort by alphabet'>Alfabeticamente</option>
+                    </select>
+                    <button id="buttonSort" type='button' onClick={(e) => handleChangeSort(e, selectSort.current.value)}>↑↓</button>
+                    <button onClick={() => {dispatch(getPokemons()); setEstadoFiltro(''); setCurrentpage(1)}}>Get pokemons</button>
+                </div>
+                <div>
+                    <SearchBar/>
+                </div>
             </div>
-            
             <div>
-                <SearchBar/>
-            </div>
-            <div>
-                {typeof pokemonsOfPagina === "object" &&
-                <Paginado
-                    pokemonesPorpagina={pokemonesPorpagina}
-                    pokemones={length}
-                    setCurrentPage={setCurrentpage} />}
-                {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} alt=""/>}
-                {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
-                {typeof pokemonsOfPagina === "object" && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
+                <div>
+                    {typeof pokemonsOfPagina === "object" &&
+                    <Paginado
+                        pokemonesPorpagina={pokemonesPorpagina}
+                        pokemones={length}
+                        setCurrentPage={setCurrentpage} />}
+                    {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} alt=""/>}
+                </div>
+                <div className={h.cards}>
+                    {}
+                    {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
+                    {typeof pokemonsOfPagina === "object" && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
+                </div>
             </div>
         </div>
     )

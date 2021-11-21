@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes, createPokemon } from '../../actions/index';
-
+import f from './index.module.css';
 
 let statuscero = {
     name: '',
@@ -72,52 +72,50 @@ export default function Form(){
   }
   
   return (
-    <div>
-      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
+    <div className={f.divform}>
+      <form style={{display: 'flex', flexDirection: 'column', width: '200px'}}>
         <div>
-          <label>Nombre:</label>
+          <label>&emsp;Nombre</label>
           <input type='text' name='name' value={status.name} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Fuerza:</label>
+          <label>&emsp;Fuerza</label>
           <input type='text' name='fuerza' value={status.fuerza} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Defensa:</label>
+          <label>&emsp;Defensa</label>
           <input type='text' name='defensa' value={status.defensa} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Vida:</label>
+          <label>&emsp;Vida</label>
           <input type='text' name='vida' value={status.vida} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Velocidad:</label>
+          <label>&emsp;Velocidad</label>
           <input type='text' name='velocidad' value={status.velocidad} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Altura:</label>
+          <label>&emsp;Altura</label>
           <input type='text' name='altura' value={status.altura} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Peso:</label>
+          <label>&emsp;Peso</label>
           <input type='text' name='peso' value={status.peso} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <label>Imagen:</label>
+          <label>&emsp;Imagen</label>
           <input type='text' name='imgurl' value={status.imgurl} onChange={(e) => handleChange(e)}/>
         </div>
 
+        <label>&emsp;Tipo/s</label>
         <select name='tipos' defaultValue="" onChange={(e) => handleChange(e)}>{/* 
         <option value="default" selected disabled hidden></option> */}
         <option></option>
        { types.length && types.map( t => <option value={t.name}>{t.name}</option> ) }
         </select>
-        <ul>
+        <ul className={f.typesselected}>
        { status.tipos.length > 0 && status.tipos.map(t => 
-          <div>  
-            <li key={t}>{t}</li>
-            <button type='button' onClick={(e)=> handleButtonClick(e, t)}>0</button>
-          </div>
+          <p key={t}><button type='button' className={f.botontipos} onClick={(e)=> handleButtonClick(e, t)}></button>{t}</p>
        )}
         </ul>
 

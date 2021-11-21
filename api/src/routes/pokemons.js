@@ -81,7 +81,7 @@ router.post('/', async function(req,res){
         peso,
         imgurl
     });
-    ID++;
+    ID++
     if(tipos) {
         if(tipos.length === 1) {
             const tiposdb = await Tipo.findOne({ where: {name: tipos[0]} });

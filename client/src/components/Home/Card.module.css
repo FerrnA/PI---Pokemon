@@ -1,0 +1,34 @@
+.cardstyle {
+    width: 16%;
+    height: 45%;
+    border: 2px solid #19191a;
+    border-radius: 10px;
+    background-color: hsla(123, 23%, 3%, 0.5);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 8px 0.5px;
+    color: silver;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.cardstyle:hover {
+    background-color: hsla(123, 33%, 3%, 0.62);
+}
+
+.details {
+    text-decoration: none;
+}
+
+.typespokemon {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.8em;
+    width: 100%;
+    align-items: space-between;
+    justify-content: center;
+    margin-top: 0px;
+}

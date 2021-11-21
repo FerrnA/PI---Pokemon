@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/NavBar/NavBar.module.css"],"names":[],"mappings":"AAAA,oBACI,YAAa,CACb,YAAa,CACb,6BAA8B,CAC9B,8BACJ","file":"main.5b7114db.chunk.css","sourcesContent":[".grid {\r\n    display: grid;\r\n    width: 1000px;\r\n    grid-template-columns: 50% 50%;\r\n    grid-template-rows: repeat(10%);\r\n}"]}

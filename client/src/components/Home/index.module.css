@@ -1,0 +1,52 @@
+.hom {
+    width: 100%;
+    background-image: url("background.png");
+    /* https://wallpaper-house.com/data/out/7/wallpaper2you_147653.jpg */
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.divSelects {
+    display: flex;
+    position: top;
+    width: 1200px;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1.05em;
+    font-weight: 700;
+}
+
+.cards {
+    display: flex;
+    width: 1000px;
+    height: 500px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.tiposselecc {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 0.8em;
+    width: 80%;
+    align-items: space-between;
+    justify-content: space-between;
+    margin-top: 0px;
+}
+
+.botonTipos {
+    border: 1px outset blue;
+    background-color: lightBlue;
+    height: 10px;
+    width: 10px;
+    cursor: pointer;
+}
+.botonTipos:hover {
+    background-color: blue;
+    color:white;
+}
