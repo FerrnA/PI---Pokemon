@@ -15,7 +15,7 @@ export default function PokemonData(){
     return (
         <div className={pd.pokemondata}>
             <div className={pd.carddatastyle}>
-               {pokemon &&
+               {pokemon.name &&
                 <ul className={pd.divcarddata}>
                     <div className={pd.divdata}> 
                         <li>ID: {pokemon.id}</li> 

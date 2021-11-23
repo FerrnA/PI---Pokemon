@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes, createPokemon } from '../../actions/index';
 import f from './index.module.css';
@@ -19,6 +19,8 @@ export default function Form(){
   const [status, setStatus] = useState(statuscero);
   const dispatch = useDispatch();
   let types = useSelector((state) => state.types);
+
+  const inputTipos = useRef();
 
   useEffect(()=> {
     dispatch(getTypes());
@@ -58,6 +60,7 @@ export default function Form(){
         let cleaned = clean(status);
         dispatch(createPokemon(cleaned));
         setStatus(statuscero);
+        inputTipos.current.value = "";///limpiar input tipo/s
         alert('Pokemon creado!');
       }
       else alert('Es necesario un nombre!')
@@ -69,6 +72,7 @@ export default function Form(){
       ...status,
       tipos: [...(status.tipos.filter(e => e !== t))]
     });
+    if(status.tipos.length === 1) inputTipos.current.value = '';// setState es asincrono?, entonces funciona con === 1 y no con 0
   }
   
   return (
@@ -108,7 +112,7 @@ export default function Form(){
         </div>
 
         <label>&emsp;Tipo/s</label>
-        <select name='tipos' defaultValue="" onChange={(e) => handleChange(e)}>{/* 
+        <select name='tipos' defaultValue="" ref={inputTipos} onChange={(e) => handleChange(e)}>{/* 
         <option value="default" selected disabled hidden></option> */}
         <option></option>
        { types.length && types.map( t => <option value={t.name}>{t.name}</option> ) }

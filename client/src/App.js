@@ -1,6 +1,6 @@
 import React from 'react';
 //import './App.css';
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NavBar from './components/NavBar/NavBar';
 import LandingPage from './components/LandingPage/LandingPage.js';
 var Form = require('./components/Form/index.js').default;
@@ -10,7 +10,6 @@ var Home = require('./components/Home/index.js').default;
 
 function App() {
   return (
-    <Router>
     <Routes>
       <Route path="/" element={<LandingPage/>}/>
       <Route path="/home" element={<NavBar/>}>
@@ -20,7 +19,6 @@ function App() {
         <Route path="crea" element={<Form/>}/>
       </Route>
     </Routes>
-    </Router>
   );
 }
 

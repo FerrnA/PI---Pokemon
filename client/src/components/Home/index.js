@@ -215,7 +215,8 @@ export default function Home() {
                     <Paginado
                         pokemonesPorpagina={pokemonesPorpagina}
                         pokemones={length}
-                        setCurrentPage={setCurrentpage} />}
+                        setCurrentPage={setCurrentpage}
+                        currentPage={currentPage} />}
                 </div>
                 <div className={h.cards}>
                     {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} style={{height: '10em', marginTop:'10em'}} alt=""/>}
