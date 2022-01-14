@@ -104,7 +104,7 @@ export default function Home() {
     function handleChangeSc(e){
         e.preventDefault();
         if(estadoFiltro !== 'Pokemones creados' && estadoFiltro !== 'Sin pokemones creados'){
-            selectSort.current.value = "";///juntar con setCurrentpage(1) ne una funcion
+            selectSort.current.value = "";//---- juntar con setCurrentpage(1) en una funcion ----//
             selectTypes.current.value = ""; ///
             setEstadoTiposselect([]);
             setCurrentpage(1);
@@ -134,9 +134,14 @@ export default function Home() {
     //
     function handleButtonClick(e, t) {
         e.preventDefault();
+        if(estadoTiposselect.length === 1 && estadoTiposselect[0] === t) {
+          selectTypes.current.value = ""; //limpiar select types input
+          setEstadoFiltro('');
+        }
         setEstadoTiposselect([
             ...(estadoTiposselect.filter(el => el !== t))
         ]);
+        setCurrentpage(1);
     }
     //types
 
@@ -210,7 +215,7 @@ export default function Home() {
                 </div>
             </div>
             <div>
-                <div>
+                <div className={h.paginado}>
                     {typeof pokemonsOfPagina === "object" &&
                     <Paginado
                         pokemonesPorpagina={pokemonesPorpagina}
@@ -218,10 +223,13 @@ export default function Home() {
                         setCurrentPage={setCurrentpage}
                         currentPage={currentPage} />}
                 </div>
-                <div className={h.cards}>
+                <div className={h.cardsContainer}>
+                  <div className={h.grid}>
                     {(pokemones.length === 0 && estadoFiltro === '') && <img src={spinner} style={{height: '10em', marginTop:'10em'}} alt=""/>}
                     {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
-                    {typeof pokemonsOfPagina === "object" && pokemonsOfPagina.map(p => <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
+                    {typeof pokemonsOfPagina === "object" && pokemonsOfPagina.map(p =>
+                            <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id}/>)}
+                  </div>
                 </div>
             </div>
         </div>

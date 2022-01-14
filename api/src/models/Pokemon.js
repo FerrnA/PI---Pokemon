@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT
     },
     imgurl: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     }
   },
   {
