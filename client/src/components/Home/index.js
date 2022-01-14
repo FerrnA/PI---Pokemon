@@ -5,7 +5,7 @@ import Card from './Card';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
 import { mergeSort } from './mergeFunction';
-import spinner from './gifBulbasaur.gif';
+import spinner from './bulbasaur-gif.gif';
 import h from './index.module.css';
 
 

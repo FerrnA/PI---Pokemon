@@ -57,6 +57,7 @@
 .types span {
   margin: 0.15rem 0.15rem;
   padding: 0 0.15rem 0.08rem 0.15rem;
+  font-size: 0.95rem;
   border: thin solid lightgrey;
   border-radius: 0.2rem;
 }
@@ -75,4 +76,66 @@
 }
 .details:visited {
   color: aqua;
+}
+
+/* colours */
+.normal {
+  background-color: lightyellow;
+}
+.fighting {
+  background-color: brown;
+}
+.flying {
+  background-color: lightskyblue;
+}
+.poison {
+  background-color: darkmagenta;
+}
+.ground {
+  background-color: darkgoldenrod;
+}
+.rock {
+  background-color: grey;
+}
+.bug {
+  background-color: olivedrab;
+}
+.ghost {
+  background-color: darkslategray;
+}
+.steel {
+  background-color: steelblue;
+}
+.fire {
+  background-color: orangered;
+}
+.water {
+  background-color: lightseagreen;
+}
+.grass {
+  background-color: olive;
+}
+.electric {
+  background-color: yellow;
+}
+.psychic {
+  background-color: palevioletred;
+}
+.ice {
+  background-color: cornflowerblue;
+}
+.dragon {
+  background-color: rgb(218, 8, 8);
+}
+.dark {
+  background-color: dimgray;
+}
+.fairy {
+  background-color: violet;
+}
+.unknown {
+  background-color: transparent;
+}
+.shadow {
+  background-color: darkblue;
 }
