@@ -2,24 +2,24 @@
   box-sizing: border-box;
 }
 
-.asd {
+.mainNavDiv {
   width: 100vw;
 }
-.asd > * {
+.mainNavDiv > * {
   display: inline-block;
 }
 
-.header {
+.mainNav {
   display: inline-block;
-  position: fixed;
-  z-index: 2;
-  top: 0;
-  left: 2rem;
-  width: calc(20vw - 2rem);
+  z-index: 1000;
+  width: 100%;
   height: 100vh;
-  background-color:/*hsl(80 87% 91%)*/ hsla(11, 80%, 60%, 0.9);
+  background-image: linear-gradient(
+    hsla(11, 80%, 60%, 0.9),
+    transparent
+  ); /*hsl(80 87% 91%)*/
 }
-.nav {
+.navdiv {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -27,36 +27,17 @@
   justify-content: flex-start;
 }
 
-.asidemenu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 2rem;
-  height: 100vh;
-  background-color: hsla(11, 90%, 50%, 0.9);
-}
-.asidemenu:hover {
-  cursor: pointer;
-}
-
 .component {
   width: 100vw;
   display: inline;
   position: absolute;
+  z-index: 0;
   top: 0;
   right: 0;
   margin-right: 0;
   padding: 0 3rem;
 }
 
-/* .navlinks {
-    display: flex;
-    width: 25%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  } */
 .nonactive {
   text-decoration: none;
   color: hsla(48, 100%, 50%, 0.8);
