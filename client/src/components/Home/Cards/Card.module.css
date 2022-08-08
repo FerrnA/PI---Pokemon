@@ -1,141 +1,187 @@
-.card,
-.card > * {
-  box-sizing: border-box;
-}
-:root {
-  --cardPadding: 0.6rem;
-}
-.card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: var(--cardPadding);
-  display: block;
-  color: hsla(123, 23%, 3%, 0.5);
-  background-color: silver;
-  border: 2px solid #19191a;
-  border-radius: 10px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-.card:hover {
-  background-color: hsla(123, 33%, 3%, 0.62);
-}
-
-.top {
-  width: calc(100% - 2 * var(--cardPadding));
-  position: absolute;
-  top: var(--cardPadding);
-}
-.top div {
-  display: block;
-  overflow-wrap: break-word;
-  width: 100%;
-}
-.id {
-  display: inline;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.divpoke {
-  width: calc(100% - 2 * var(--cardPadding));
-  position: absolute;
-  margin: 0 auto;
-  display: block;
-  bottom: calc(20% + var(--cardPadding));
-  text-align: center;
-}
-.imgpoke {
-  height: 6rem;
-  padding: 1rem;
-  border-radius: 50%;
-  background-color: white;
-}
-
-.type1 span,
-.types span {
-  margin: 0.15rem 0.15rem;
-  padding: 0 0.15rem 0.08rem 0.15rem;
-  font-size: 0.95rem;
-  border: thin solid lightgrey;
-  border-radius: 0.2rem;
-}
-.types {
-  width: calc(100% - 2 * var(--cardPadding));
-  margin-top: 0.6rem;
-  position: absolute;
-  top: calc(1rem + var(--cardPadding));
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.details {
-  text-decoration: none;
-  color: aqua;
-}
-.details:visited {
-  color: aqua;
-}
-
-/* colours */
-.normal {
-  background-color: lightyellow;
+/* ---- colours ---- */
+/* .normal {
+  background: linear-gradient(to top, #b4b49c, #9999);
 }
 .fighting {
-  background-color: brown;
+  background: linear-gradient(to top, #f0412f, #9999);
 }
 .flying {
-  background-color: lightskyblue;
+  background: linear-gradient(to top, #beedf4, #9999);
 }
 .poison {
-  background-color: darkmagenta;
+  background: linear-gradient(to top, #a35b99, #9999);
+  font-weight: 100;
 }
 .ground {
-  background-color: darkgoldenrod;
+  background: linear-gradient(to top, #97604e, #9999);
 }
 .rock {
-  background-color: grey;
+  background: linear-gradient(to top, #6a6a52, #9999);
 }
 .bug {
-  background-color: olivedrab;
+  border-left: 5px solid #5eb020;
+  background: linear-gradient(to top, #5eb020, #9999);
 }
 .ghost {
-  background-color: darkslategray;
+  background: linear-gradient(to top, #36656d, #9999);
 }
 .steel {
-  background-color: steelblue;
+  background: linear-gradient(to top, #b8b8d0, #9999);
 }
 .fire {
-  background-color: orangered;
+  background: linear-gradient(to top, #ea9420, #9999);
 }
 .water {
-  background-color: lightseagreen;
+  background: linear-gradient(to top, #357f8c, #9999);
 }
 .grass {
-  background-color: olive;
+  background: linear-gradient(to top, #07751e, #9999);
 }
 .electric {
-  background-color: yellow;
+  background: linear-gradient(to top, #f8d030, #9999);
 }
 .psychic {
-  background-color: palevioletred;
+  background: linear-gradient(to top, #f85888, #9999);
 }
 .ice {
-  background-color: cornflowerblue;
+  background: linear-gradient(to top, #98d8d8, #9999);
 }
 .dragon {
-  background-color: rgb(218, 8, 8);
+  background: linear-gradient(to top, #d96652, #9999);
 }
 .dark {
-  background-color: dimgray;
+  background: linear-gradient(to top, dimgray, #9999);
 }
 .fairy {
-  background-color: violet;
+  background: linear-gradient(to top, violet, #9999);
 }
 .unknown {
-  background-color: transparent;
+  background: linear-gradient(to top, #357f8c, #9999);
 }
 .shadow {
-  background-color: darkblue;
+  background: linear-gradient(to top, darkblue, #9999);
+} */
+
+/* ---- emojis ---- */
+.normal::before {
+  content: "";
+}
+.bug::before {
+  content: "🐛";
+}
+.dark::before {
+  content: "🕶";
+}
+.dragon::before {
+  content: "🐉";
+}
+.electric::before {
+  content: "⚡";
+}
+.fairy::before {
+  content: "🪄";
+}
+.flying::before {
+  content: "🛫";
+}
+.fighting::before {
+  content: "🥊";
+}
+.fire::before {
+  content: "🔥";
+}
+.ghost::before {
+  content: "👻";
+}
+.grass::before {
+  content: "🌿";
+}
+.ground::before {
+  content: "🌱";
+}
+.ice::before {
+  content: "🧊";
+}
+.poison::before {
+  content: "🧪";
+}
+.psychic::before {
+  content: "🔮";
+}
+.rock::before {
+  content: "🪨";
+}
+.shadow::before {
+  content: "🦇";
+}
+.steel::before {
+  content: "🔩";
+}
+.unknown::before {
+  content: "❔";
+}
+.water::before {
+  content: "🌀";
+}
+
+/* ---- bg-colours ---- */
+.bGnormal {
+  background-color: #b4b49c;
+}
+.bGbug {
+  background-color: #5eb020;
+}
+.bGdark {
+  background-color: dimgray;
+}
+.bGdragon {
+  background-color: #d96652;
+}
+.bGelectric {
+  background-color: #f8d030;
+}
+.bGfairy {
+  background-color: #ee99ac;
+}
+.bGflying {
+  background-color: #beedf4;
+}
+.bGfire {
+  background-color: #ea9420;
+}
+.bGfighting {
+  background-color: #f0412f;
+}
+.bGghost {
+  background-color: #705898;
+}
+.bGgrass {
+  background-color: #07751e;
+}
+.bGground {
+  background-color: #97604e;
+}
+.bGice {
+  background-color: #98d8d8;
+}
+.bGpoison {
+  background-color: #663a60;
+}
+.bGpsychic {
+  background-color: #f85888;
+}
+.bGrock {
+  background-color: #6a6a52;
+}
+.bGshadow {
+  background-color: #36656d;
+}
+.bGsteel {
+  background-color: #b8b8d0;
+}
+.bGunknown {
+  background-color: #68a090;
+}
+.bGwater {
+  background-color: #357f8c;
 }

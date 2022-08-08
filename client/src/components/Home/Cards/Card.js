@@ -1,16 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import c from "./Card.module.css";
+import "./Cards.css";
 
 export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
+  const name = nombre[0].toUpperCase() + nombre.slice(1);
+
   function pad(num) {
     //function for Id leading zeros #005
     num = num.toString();
     while (num.length < 3) num = "0" + num;
     return num;
   }
-  const tiposº1 = tipos[0];
-  const tiposS = tipos.slice(1);
 
   function switchTypeStyle(p) {
     switch (p) {
@@ -58,17 +59,83 @@ export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
         return c.grey;
     }
   }
+  function switchBgStyle(p) {
+    switch (p) {
+      case "normal":
+        return c.bGnormal;
+      case "fighting":
+        return c.bGfighting;
+      case "flying":
+        return c.bGflying;
+      case "poison":
+        return c.bGpoison;
+      case "ground":
+        return c.bGground;
+      case "rock":
+        return c.bGrock;
+      case "bug":
+        return c.bGbug;
+      case "ghost":
+        return c.bGghost;
+      case "steel":
+        return c.bGsteel;
+      case "fire":
+        return c.bGfire;
+      case "water":
+        return c.bGwater;
+      case "grass":
+        return c.bGgrass;
+      case "electric":
+        return c.bGelectric;
+      case "psychic":
+        return c.bGpsychic;
+      case "ice":
+        return c.bGice;
+      case "dragon":
+        return c.bGdragon;
+      case "dark":
+        return c.bGdark;
+      case "fairy":
+        return c.bGfairy;
+      case "unknown":
+        return c.bGunknown;
+      case "shadow":
+        return c.bGshadow;
+      default:
+        return c.bGgrey;
+    }
+  }
   return (
-    <div className={c.card}>
+    <div className={"card " + switchBgStyle(tipos[0])}>
+      <div className="card_typesAndId">
+        <div className="card_typesAndId--types">
+          {tipos && tipos.map((p) => <span className={switchTypeStyle(p) + " type"}>{p}</span>)}
+        </div>
+        <span className="">#{pad(Id)}</span>
+      </div>
+      <div className="card_Center">
+        <img src={imgurl} alt={name} className="card_Center--img" width="150" />
+        <h2 className="card_Center--pokeName">{name}</h2>
+        <NavLink to={`/home/pokemons/${Id}`} className="card_Center--details">
+          <span>^</span>
+          <br />
+          Ver detalles
+        </NavLink>
+      </div>
+    </div>
+  );
+}
+
+/* <div className={c.card}>
       <div className={c.top}>
         <div className={c.type1}>
-          <span className={switchTypeStyle(tiposº1)}>{tiposº1}</span>
+          <i className={switchTypeStyle(tiposº1)}>{tiposº1}</i>
         </div>
         <span className={c.id}>#{pad(Id)}</span>
       </div>
       <div className={c.types}>
         {tiposS &&
-          tiposS.map((p) => <span className={switchTypeStyle(p)}>{p}</span>)}
+          tiposS.map((p) => <i className={switchTypeStyle(p)}>{p}</i>)}
       </div>
       <div className={c.divpoke}>
         <img src={imgurl} alt="" className={c.imgpoke} />
@@ -77,6 +144,4 @@ export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
       <NavLink to={`/home/pokemons/${Id}`} className={c.details}>
         Details
       </NavLink>
-    </div>
-  );
-}
+    </div> */
