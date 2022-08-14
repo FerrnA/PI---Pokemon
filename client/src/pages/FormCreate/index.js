@@ -15,7 +15,7 @@ let initialStatus = {
   imgurl: "",
 };
 
-export default function Form() {
+export default function FormCreate() {
   const [status, setStatus] = useState(initialStatus);
   const dispatch = useDispatch();
   let types = useSelector((state) => state.types);

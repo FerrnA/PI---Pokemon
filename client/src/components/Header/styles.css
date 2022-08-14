@@ -1,22 +1,12 @@
-* {
-  box-sizing: border-box;
-}
-
-.mainNavDiv {
-  width: 100vw;
-}
-.mainNavDiv > * {
-  display: inline-block;
-}
-
-.mainNav {
+.header {
   display: inline-block;
   z-index: 1000;
   width: 100%;
   height: 100vh;
   background-image: linear-gradient(hsla(11, 80%, 60%, 0.9), transparent); /*hsl(80 87% 91%)*/
 }
-.navdiv {
+/* Header child nav */
+.header--nav {
   width: 100%;
   background-color: #313131;
   border-radius: 0 0 15px 15px;
@@ -27,22 +17,11 @@
   justify-content: flex-start;
 }
 
-.component {
-  width: 100vw;
-  display: inline;
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 0;
-  margin-right: 0;
-  padding: 0 3rem;
-}
-
+/* NavLink onActive classNames */
 .nonactive {
   text-decoration: none;
   color: hsla(48, 100%, 50%, 0.8);
 }
-
 .nonactive:hover {
   text-decoration: none;
   color: hsla(318, 92%, 28%, 0.8);

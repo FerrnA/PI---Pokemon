@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+.routesNav {
+  width: 100vw;
+}
+.routesNav > * {
+  display: inline-block;
+}
+
+.component {
+  width: 100vw;
+  display: inline;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  margin-right: 0;
+  padding: 0 3rem;
+}

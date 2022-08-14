@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import RoutesNav from "./components/RoutesNav";
 import LandingPage from "./pages/LandingPage/LandingPage.js";
-import Form from "./pages/FormCreate/index.js";
+import FormCreate from "./pages/FormCreate/index.js";
 import PokemonDetail from "./pages/PokemonDetail/index.js";
 import Home from "./components/Home/index.js";
 
@@ -13,7 +13,7 @@ function App() {
       <Route path="/home" element={<RoutesNav />}>
         <Route index element={<Home />} />
         <Route path={`pokemons/:pokemonID`} element={<PokemonDetail />} />
-        <Route path="crea" element={<Form />} />
+        <Route path="crearPokemon" element={<FormCreate />} />
       </Route>
     </Routes>
   );
