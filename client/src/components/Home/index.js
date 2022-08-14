@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getPokemons, getTypes } from "../../actions/index";
+import { getPokemons, getTypes } from "../../redux/actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "./Cards/Card";
 import SearchBar from "./SearchBar/SearchBar";
@@ -71,9 +71,7 @@ export default function Home() {
     if (estadoFiltro === "Filtrado por Tipos") {
       if (currentPage === 1) {
         let pokemonsOfPagina = pokemones.filter(
-          (p) =>
-            p.tipos &&
-            p.tipos.some((n) => estadoTiposselect.includes(n)) === true
+          (p) => p.tipos && p.tipos.some((n) => estadoTiposselect.includes(n)) === true
         );
         return {
           pokemonsOfPagina: pokemonsOfPagina.slice(indiceL, indiceR - 3),
@@ -81,8 +79,7 @@ export default function Home() {
         };
       }
       let pokemonsOfPagina = pokemones.filter(
-        (p) =>
-          p.tipos && p.tipos.some((n) => estadoTiposselect.includes(n)) === true
+        (p) => p.tipos && p.tipos.some((n) => estadoTiposselect.includes(n)) === true
       );
       return {
         pokemonsOfPagina: pokemonsOfPagina.slice(indiceL - 3, indiceR - 3),
@@ -132,10 +129,7 @@ export default function Home() {
   })();
   function handleChangeSc(e) {
     e.preventDefault();
-    if (
-      estadoFiltro !== "Pokemones creados" &&
-      estadoFiltro !== "Sin pokemones creados"
-    ) {
+    if (estadoFiltro !== "Pokemones creados" && estadoFiltro !== "Sin pokemones creados") {
       selectSort.current.value = ""; //---- juntar con setCurrentpage(1) en una funcion ----//
       selectTypes.current.value = ""; ///
       setEstadoTiposselect([]);
@@ -225,8 +219,7 @@ export default function Home() {
           >
             Tipos de pokemon
             <option></option>
-            {types.length &&
-              types.map((t) => <option value={t.name}>{t.name}</option>)}
+            {types.length && types.map((t) => <option value={t.name}>{t.name}</option>)}
           </select>
           <ul className={h.tiposselecc}>
             {estadoTiposselect.length > 0 &&
@@ -288,23 +281,12 @@ export default function Home() {
         <div className={h.cardsContainer}>
           <div className={h.grid}>
             {pokemones.length === 0 && estadoFiltro === "" && (
-              <img
-                src={spinner}
-                style={{ height: "10em", marginTop: "10em" }}
-                alt=""
-              />
+              <img src={spinner} style={{ height: "10em", marginTop: "10em" }} alt="" />
             )}
-            {pokemones === "Pokemon no encontrado" && (
-              <h2>...Pokemon No Encontrado...</h2>
-            )}
+            {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
             {typeof pokemonsOfPagina === "object" &&
               pokemonsOfPagina.map((p) => (
-                <Card
-                  nombre={p.name}
-                  imgurl={p.imgurl}
-                  tipos={p.tipos}
-                  Id={p.id}
-                />
+                <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id} />
               ))}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getPokemonName } from "../../../actions/index";
+import { getPokemonName } from "../../../redux/actions/index";
 import { useDispatch } from "react-redux";
 
 export default function SearchBar() {

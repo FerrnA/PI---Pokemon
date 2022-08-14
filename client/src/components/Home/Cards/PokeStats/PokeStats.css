@@ -1,0 +1,16 @@
+.pokeStats {
+  width: 100%;
+  display: flex;
+}
+.pokeStats--list {
+  list-style-type: none;
+  flex-grow: 1;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.pokeStats--list li {
+  color: #313131;
+  font-weight: lighter;
+}

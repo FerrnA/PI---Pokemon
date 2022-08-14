@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
-import a from "./NavBar.module.css";
+import a from "./RoutesNav.module.css";
 
-export default function NavBar() {
+export default function RoutesNav() {
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split("/");
@@ -16,21 +16,9 @@ export default function NavBar() {
             <h3>
               <NavLink
                 to="/home"
-                className={
-                  splitLocation[2] === undefined ? a.active : a.nonactive
-                }
+                className={splitLocation[2] === undefined ? a.active : a.nonactive}
               >
                 Home
-              </NavLink>
-            </h3>
-            <h3>
-              <NavLink
-                to="/home/types"
-                className={
-                  splitLocation[2] === "types" ? a.active : a.nonactive
-                }
-              >
-                Pokemon types
               </NavLink>
             </h3>
             <h3>
