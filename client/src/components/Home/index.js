@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "./Cards/Card";
 import SearchBar from "./SearchBar/SearchBar";
 import Paginado from "./Paginado";
-import { mergeSort } from "./common/mergeFunction";
-import spinner from "./common/bulbasaur-gif.gif";
+import { mergeSort } from "./functions";
+import spinner from "../../images/bulbasaur-gif.gif";
 import h from "./index.module.css";
 
 export default function Home() {
