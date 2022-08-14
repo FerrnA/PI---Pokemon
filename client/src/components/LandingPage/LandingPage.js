@@ -1,16 +1,18 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import ad from './LandingPage.module.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import pokeapi from "../../images/pokeapi.png";
+import "./LandingPage.css";
 
 export default function LandingPage() {
-
-
-    return (
-        <div className={ad.ad}>
-            <NavLink to="/home">
-                <div className={ad.divpokeball}>
-                </div>
-            </NavLink>
-        </div>
-    )
+  return (
+    <div className="landing">
+      <span>
+        Bienvenido/a a <br />
+        <img src={pokeapi} alt="pokeapi logo" />
+      </span>
+      <NavLink to="/home">
+        <div className="landing--pokeball"></div>
+      </NavLink>
+    </div>
+  );
 }
