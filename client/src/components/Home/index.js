@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getPokemons, getTypes } from "../../redux/actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import Card from "./Cards/Card";
 import SearchBar from "./SearchBar/SearchBar";
 import Paginado from "./Paginado";
 import { mergeSort } from "./functions";
-import spinner from "../../images/bulbasaur-gif.gif";
 import h from "./index.module.css";
+import Cards from "../Cards";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -278,18 +277,11 @@ export default function Home() {
             />
           )}
         </div>
-        <div className={h.cardsContainer}>
-          <div className={h.grid}>
-            {pokemones.length === 0 && estadoFiltro === "" && (
-              <img src={spinner} style={{ height: "10em", marginTop: "10em" }} alt="" />
-            )}
-            {pokemones === "Pokemon no encontrado" && <h2>...Pokemon No Encontrado...</h2>}
-            {typeof pokemonsOfPagina === "object" &&
-              pokemonsOfPagina.map((p) => (
-                <Card nombre={p.name} imgurl={p.imgurl} tipos={p.tipos} Id={p.id} />
-              ))}
-          </div>
-        </div>
+        <Cards
+          pokemones={pokemones}
+          pokemonsOfPagina={pokemonsOfPagina}
+          estadoFiltro={estadoFiltro}
+        />
       </div>
     </div>
   );

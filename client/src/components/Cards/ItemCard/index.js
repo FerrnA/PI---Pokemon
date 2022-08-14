@@ -1,9 +1,9 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { pad, switchBgStyle, switchTypeStyle } from "./functions";
-import PokeStats from "./PokeStats/PokeStats";
+import CardStats from "./CardStats";
 import axios from "axios";
-import "./Cards.css";
+import "./styles.css";
 
 const apiUrl = process.env.REACT_APP_API;
 
@@ -25,17 +25,20 @@ export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
 
   return (
     <div className={"card " + switchBgStyle(tipos[0])}>
-      <div className="card_typesAndId">
-        <div className="card_typesAndId--types">
+      <div className="card--typesAndId">
+        <div className="card--typesAndId_types">
           {tipos && tipos.map((p) => <span className={switchTypeStyle(p) + " type"}>{p}</span>)}
         </div>
         <span className="">#{pad(Id)}</span>
       </div>
-      <div className="card_Center">
-        <img src={imgurl} alt={name} className="card_Center--img" width="150" />
-        <h2 className="card_Center--pokeName">{name}</h2>
-        <Suspense fallback={<></>}>{pokeData && <PokeStats pokeData={pokeData} />}</Suspense>
-        <NavLink to={`/home/pokemons/${Id}`} className="card_Center--details">
+      <div className="card--Center">
+        <img src={imgurl} alt={name} className="card--Center_img" width="150" />
+        <h2 className="card--Center_pokeName">{name}</h2>
+
+        {/* TODO: agregar un componente loader como fallback del componente  CardStats */}
+        <Suspense fallback={<></>}>{pokeData && <CardStats pokeData={pokeData} />}</Suspense>
+
+        <NavLink to={`/home/pokemons/${Id}`} className="card--Center_details">
           Ver detalles
         </NavLink>
       </div>

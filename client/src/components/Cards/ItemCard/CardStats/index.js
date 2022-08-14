@@ -1,15 +1,15 @@
 import React from "react";
-import "./PokeStats.css";
+import "./styles.css";
 
-function PokeStats({ pokeData }) {
+function CardStats({ pokeData }) {
   return (
-    <div className="pokeStats">
-      <div className="pokeStats--list">
+    <div className="cardStats">
+      <div className="cardStats--list">
         <li>Altura {pokeData.altura}</li>
         <li>Peso {pokeData.peso}</li>
         <li>Vida {pokeData.vida}</li>
       </div>
-      <div className="pokeStats--list">
+      <div className="cardStats--list">
         <li>Velocidad {pokeData.velocidad}</li>
         <li>Fuerza {pokeData.fuerza}</li>
         <li>Defensa {pokeData.defensa}</li>
@@ -18,4 +18,4 @@ function PokeStats({ pokeData }) {
   );
 }
 
-export default PokeStats;
+export default CardStats;

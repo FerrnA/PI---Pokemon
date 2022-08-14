@@ -1,8 +1,8 @@
-.pokeStats {
+.cardStats {
   width: 100%;
   display: flex;
 }
-.pokeStats--list {
+.cardStats--list {
   list-style-type: none;
   flex-grow: 1;
   width: 50%;
@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: baseline;
 }
-.pokeStats--list li {
+.cardStats--list li {
   color: #313131;
   font-weight: lighter;
 }
