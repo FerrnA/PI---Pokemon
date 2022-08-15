@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getPokemons, getTypes } from "../../redux/actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import SearchBar from "./SearchBar/SearchBar";
-import Paginado from "./Paginado";
+import { getPokemons, getTypes } from "../../redux/actions/index";
 import { mergeSort } from "./functions";
-import h from "./index.module.css";
+import Filters from "../Header/Filters";
+import Paginate from "./Paginate";
 import Cards from "../Cards";
+import "./styles.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const pokemones = useSelector((state) => state.pokemons);
   let types = useSelector((state) => state.types);
-  const [estadoTiposselect, setEstadoTiposselect] = useState([]);
+  const pokemones = useSelector((state) => state.pokemons);
+
+  const [checkedTypes, setCheckedTypes] = useState([]);
 
   const selectSort = useRef();
   const selectTypes = useRef();
@@ -22,256 +23,201 @@ export default function Home() {
     dispatch(getTypes());
   }, [dispatch]);
 
-  const [estadoFiltro, setEstadoFiltro] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
   const [currentPage, setCurrentpage] = useState(1);
   const indiceR = 12 * currentPage;
   const indiceL = indiceR - 12;
-  const { pokemonsOfPagina, length } = (() => {
-    if (estadoFiltro === "") {
+  const { pokemonsPaginated, length } = (() => {
+    if (filterStatus === "") {
       if (currentPage === 1) {
         return {
-          pokemonsOfPagina: pokemones.slice(indiceL, indiceR - 3),
+          pokemonsPaginated: pokemones.slice(indiceL, indiceR - 3),
           length: pokemones.length,
         };
       }
       return {
-        pokemonsOfPagina: pokemones.slice(indiceL - 3, indiceR - 3),
+        pokemonsPaginated: pokemones.slice(indiceL - 3, indiceR - 3),
         length: pokemones.length,
       };
     }
-    if (estadoFiltro === "Pokemones creados") {
+    if (filterStatus === "Pokemones creados") {
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemones.filter((p) => p.id >= 1200);
+        let pokemonsPaginated = pokemones.filter((p) => p.id >= 1200);
         return {
-          pokemonsOfPagina: pokemonsOfPagina.slice(indiceL, indiceR - 3),
-          length: pokemonsOfPagina.length,
+          pokemonsPaginated: pokemonsPaginated.slice(indiceL, indiceR - 3),
+          length: pokemonsPaginated.length,
         };
       }
-      let pokemonsOfPagina = pokemones.filter((p) => p.id >= 1200);
+      let pokemonsPaginated = pokemones.filter((p) => p.id >= 1200);
       return {
-        pokemonsOfPagina: pokemonsOfPagina.slice(indiceL - 3, indiceR - 3),
-        length: pokemonsOfPagina.length,
+        pokemonsPaginated: pokemonsPaginated.slice(indiceL - 3, indiceR - 3),
+        length: pokemonsPaginated.length,
       };
     }
-    if (estadoFiltro === "Sin pokemones creados") {
+    if (filterStatus === "Sin pokemones creados") {
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemones.filter((p) => p.id < 1200);
+        let pokemonsPaginated = pokemones.filter((p) => p.id < 1200);
         return {
-          pokemonsOfPagina: pokemonsOfPagina.slice(indiceL, indiceR - 3),
-          length: pokemonsOfPagina.length,
+          pokemonsPaginated: pokemonsPaginated.slice(indiceL, indiceR - 3),
+          length: pokemonsPaginated.length,
         };
       }
-      let pokemonsOfPagina = pokemones.filter((p) => p.id < 1200);
+      let pokemonsPaginated = pokemones.filter((p) => p.id < 1200);
       return {
-        pokemonsOfPagina: pokemonsOfPagina.slice(indiceL - 3, indiceR - 3),
-        length: pokemonsOfPagina.length,
+        pokemonsPaginated: pokemonsPaginated.slice(indiceL - 3, indiceR - 3),
+        length: pokemonsPaginated.length,
       };
     }
-    if (estadoFiltro === "Filtrado por Tipos") {
+    if (filterStatus === "Filtrado por Tipos") {
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemones.filter(
-          (p) => p.tipos && p.tipos.some((n) => estadoTiposselect.includes(n)) === true
+        let pokemonsPaginated = pokemones.filter(
+          (p) => p.tipos && p.tipos.some((n) => checkedTypes.includes(n)) === true
         );
         return {
-          pokemonsOfPagina: pokemonsOfPagina.slice(indiceL, indiceR - 3),
-          length: pokemonsOfPagina.length,
+          pokemonsPaginated: pokemonsPaginated.slice(indiceL, indiceR - 3),
+          length: pokemonsPaginated.length,
         };
       }
-      let pokemonsOfPagina = pokemones.filter(
-        (p) => p.tipos && p.tipos.some((n) => estadoTiposselect.includes(n)) === true
+      let pokemonsPaginated = pokemones.filter(
+        (p) => p.tipos && p.tipos.some((n) => checkedTypes.includes(n)) === true
       );
       return {
-        pokemonsOfPagina: pokemonsOfPagina.slice(indiceL - 3, indiceR - 3),
-        length: pokemonsOfPagina.length,
+        pokemonsPaginated: pokemonsPaginated.slice(indiceL - 3, indiceR - 3),
+        length: pokemonsPaginated.length,
       };
     }
-    if (estadoFiltro === "Sort by alphabet") {
+    if (filterStatus === "Sort by alphabet") {
       let copiapokemones = pokemones.slice();
       let pokemonesSortedA = mergeSort(copiapokemones, "name");
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemonesSortedA.slice(indiceL, indiceR - 3);
-        return { pokemonsOfPagina, length: pokemones.length };
+        let pokemonsPaginated = pokemonesSortedA.slice(indiceL, indiceR - 3);
+        return { pokemonsPaginated, length: pokemones.length };
       }
-      let pokemonsOfPagina = pokemonesSortedA.slice(indiceL - 3, indiceR - 3);
-      return { pokemonsOfPagina, length: pokemones.length };
+      let pokemonsPaginated = pokemonesSortedA.slice(indiceL - 3, indiceR - 3);
+      return { pokemonsPaginated, length: pokemones.length };
     }
-    if (estadoFiltro === "Sort by alphabet reverse") {
+    if (filterStatus === "Sort by alphabet reverse") {
       let copiapokemones = pokemones.slice();
       let pokemonesSortedA = mergeSort(copiapokemones, "name").reverse();
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemonesSortedA.slice(indiceL, indiceR - 3);
-        return { pokemonsOfPagina, length: pokemonesSortedA.length };
+        let pokemonsPaginated = pokemonesSortedA.slice(indiceL, indiceR - 3);
+        return { pokemonsPaginated, length: pokemonesSortedA.length };
       }
-      let pokemonsOfPagina = pokemonesSortedA.slice(indiceL - 3, indiceR - 3);
-      return { pokemonsOfPagina, length: pokemonesSortedA.length };
+      let pokemonsPaginated = pokemonesSortedA.slice(indiceL - 3, indiceR - 3);
+      return { pokemonsPaginated, length: pokemonesSortedA.length };
     }
-    if (estadoFiltro === "Sort by strength") {
+    if (filterStatus === "Sort by strength") {
       let copiapokemones = pokemones.slice();
       let pokemonesSortedF = mergeSort(copiapokemones, "fuerza").reverse();
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemonesSortedF.slice(indiceL, indiceR - 3);
-        return { pokemonsOfPagina, length: pokemonesSortedF.length };
+        let pokemonsPaginated = pokemonesSortedF.slice(indiceL, indiceR - 3);
+        return { pokemonsPaginated, length: pokemonesSortedF.length };
       }
-      let pokemonsOfPagina = pokemonesSortedF.slice(indiceL - 3, indiceR - 3);
-      return { pokemonsOfPagina, length: pokemonesSortedF.length };
+      let pokemonsPaginated = pokemonesSortedF.slice(indiceL - 3, indiceR - 3);
+      return { pokemonsPaginated, length: pokemonesSortedF.length };
     }
-    if (estadoFiltro === "Sort by strength desc") {
+    if (filterStatus === "Sort by strength desc") {
       let copiapokemones = pokemones.slice();
       let pokemonesSortedF = mergeSort(copiapokemones, "fuerza");
       if (currentPage === 1) {
-        let pokemonsOfPagina = pokemonesSortedF.slice(indiceL, indiceR - 3);
-        return { pokemonsOfPagina, length: pokemonesSortedF.length };
+        let pokemonsPaginated = pokemonesSortedF.slice(indiceL, indiceR - 3);
+        return { pokemonsPaginated, length: pokemonesSortedF.length };
       }
-      let pokemonsOfPagina = pokemonesSortedF.slice(indiceL - 3, indiceR - 3);
-      return { pokemonsOfPagina, length: pokemonesSortedF.length };
+      let pokemonsPaginated = pokemonesSortedF.slice(indiceL - 3, indiceR - 3);
+      return { pokemonsPaginated, length: pokemonesSortedF.length };
     }
   })();
-  function handleChangeSc(e) {
+
+  // Filtering functions, that handles switch filtering status, types selection for 'by type', paginate update initial page [01] status
+  // By created
+  function handleFilterByCreated(e) {
     e.preventDefault();
-    if (estadoFiltro !== "Pokemones creados" && estadoFiltro !== "Sin pokemones creados") {
-      selectSort.current.value = ""; //---- juntar con setCurrentpage(1) en una funcion ----//
-      selectTypes.current.value = ""; ///
-      setEstadoTiposselect([]);
+    if (filterStatus !== "Pokemones creados" && filterStatus !== "Sin pokemones creados") {
+      selectSort.current.value = ""; // TODO:  juntar con setCurrentpage(1) en una funcion  //
+      selectTypes.current.value = ""; //
+      setCheckedTypes([]);
       setCurrentpage(1);
     }
     if (e.target.value === "Pokemones creados") {
-      setEstadoFiltro("Pokemones creados");
+      setFilterStatus("Pokemones creados");
     }
     if (e.target.value === "Sin pokemones creados") {
-      setEstadoFiltro("Sin pokemones creados");
+      setFilterStatus("Sin pokemones creados");
     }
   }
-  //types
-  function handleChangeSt(e) {
+  // By type
+  function handleFilterByType(e) {
     if (e.target.value === "") return;
-    if (estadoFiltro !== "Filtrado por Tipos") {
-      setEstadoFiltro("Filtrado por Tipos");
-      selectSort.current.value = ""; ///limpiar y focus first page
-      selectCreated.current.value = ""; ///
+    if (filterStatus !== "Filtrado por Tipos") {
+      setFilterStatus("Filtrado por Tipos");
+      selectSort.current.value = ""; // clean states and focus first page
+      selectCreated.current.value = ""; //
       setCurrentpage(1);
     }
-    if (!estadoTiposselect.includes(e.target.value)) {
-      setEstadoTiposselect([...estadoTiposselect, e.target.value]);
+    if (!checkedTypes.includes(e.target.value)) {
+      setCheckedTypes([...checkedTypes, e.target.value]);
     }
   }
-  //
-  function handleButtonClick(e, t) {
+  // handle remove checkedType (in status filter = bytype)
+  function handleCheckButton(e, t) {
     e.preventDefault();
-    if (estadoTiposselect.length === 1 && estadoTiposselect[0] === t) {
-      selectTypes.current.value = ""; //limpiar select types input
-      setEstadoFiltro("");
+    if (checkedTypes.length === 1 && checkedTypes[0] === t) {
+      selectTypes.current.value = ""; // clean select types as there's now no type for filtering 'by type' selected
+      setFilterStatus("");
     }
-    setEstadoTiposselect([...estadoTiposselect.filter((el) => el !== t)]);
+    setCheckedTypes([...checkedTypes.filter((el) => el !== t)]);
     setCurrentpage(1);
   }
-  //types
+  //
 
-  //sort
-  function handleChangeSort(e, target = e.target.value) {
+  // Sort by strenght and alphabet
+  function handleFilterBySort(e, target = e.target.value) {
     e.preventDefault();
-    if (!estadoFiltro.includes("Sort")) {
-      selectTypes.current.value = ""; ///limpiar y focus first page
-      selectCreated.current.value = ""; ///
-      setEstadoTiposselect([]);
+    if (!filterStatus.includes("Sort")) {
+      selectTypes.current.value = ""; // clean states and focus first page
+      selectCreated.current.value = ""; //
+      setCheckedTypes([]);
       setCurrentpage(1);
     }
     if (target === "Sort by alphabet") {
-      if (estadoFiltro === "Sort by alphabet") {
-        setEstadoFiltro("Sort by alphabet reverse");
-      } else if (estadoFiltro === "Sort by alphabet reverse") {
-        setEstadoFiltro("Sort by alphabet");
-      } else setEstadoFiltro("Sort by alphabet");
+      if (filterStatus === "Sort by alphabet") {
+        setFilterStatus("Sort by alphabet reverse");
+      } else if (filterStatus === "Sort by alphabet reverse") {
+        setFilterStatus("Sort by alphabet");
+      } else setFilterStatus("Sort by alphabet");
     }
     if (target === "Sort by strength") {
-      if (estadoFiltro === "Sort by strength") {
-        setEstadoFiltro("Sort by strength desc");
-      } else if (estadoFiltro === "Sort by strength desc") {
-        setEstadoFiltro("Sort by strength");
-      } else setEstadoFiltro("Sort by strength");
+      if (filterStatus === "Sort by strength") {
+        setFilterStatus("Sort by strength desc");
+      } else if (filterStatus === "Sort by strength desc") {
+        setFilterStatus("Sort by strength");
+      } else setFilterStatus("Sort by strength");
     }
   }
-  //sort
+  //
 
   return (
-    <div className={h.hom}>
-      <div name="divSelects" className={h.divSelects}>
-        <div>
-          <label>&emsp;Search by Created&ensp;</label>
-          <select
-            name="selectDecreados"
-            ref={selectCreated}
-            defaultValue=""
-            onChange={(e) => handleChangeSc(e)}
-          >
-            <option></option>
-            <option value="Pokemones creados">Pokemones creados</option>
-            <option value="Sin pokemones creados">Sin pokemones creados</option>
-          </select>
-        </div>
-        <div>
-          <label>&emsp;Search by Pokemon types&ensp;</label>
-          <select
-            name="selectDetipos"
-            ref={selectTypes}
-            defaultValue=""
-            onChange={(e) => handleChangeSt(e)}
-          >
-            Tipos de pokemon
-            <option></option>
-            {types.length && types.map((t) => <option value={t.name}>{t.name}</option>)}
-          </select>
-          <ul className={h.tiposselecc}>
-            {estadoTiposselect.length > 0 &&
-              estadoTiposselect.map((t) => (
-                <p key={t}>
-                  <button
-                    type="button"
-                    className={h.botonTipos}
-                    onClick={(e) => handleButtonClick(e, t)}
-                  ></button>
-                  {t}
-                </p>
-              ))}
-          </ul>
-        </div>
-        <div>
-          <label>&emsp;Sort by&ensp;</label>
-          <select
-            name="selectDeSort"
-            ref={selectSort}
-            defaultValue=""
-            onChange={(e) => handleChangeSort(e)}
-          >
-            <option></option>
-            <option value="Sort by strength">Fuerza</option>
-            <option value="Sort by alphabet">Alfabeticamente</option>
-          </select>
-          <button
-            id="buttonSort"
-            type="button"
-            onClick={(e) => handleChangeSort(e, selectSort.current.value)}
-          >
-            ↑↓
-          </button>
-          <button
-            onClick={() => {
-              dispatch(getPokemons());
-              setEstadoFiltro("");
-              setCurrentpage(1);
-            }}
-          >
-            Get pokemons
-          </button>
-        </div>
-        <div>
-          <SearchBar />
-        </div>
-      </div>
+    <div className="home">
+      <Filters
+        {...{
+          types,
+          handleFilterByCreated,
+          handleFilterByType,
+          handleFilterBySort,
+          handleCheckButton,
+          selectCreated,
+          selectTypes,
+          selectSort,
+          setFilterStatus,
+          setCurrentpage,
+          checkedTypes,
+        }}
+      />
       <div>
-        <div className={h.paginado}>
-          {typeof pokemonsOfPagina === "object" && (
-            <Paginado
-              pokemones={length}
+        <div className="home--paginateContainer">
+          {typeof pokemonsPaginated === "object" && (
+            <Paginate
+              numberOfPokemons={length}
               setCurrentPage={setCurrentpage}
               currentPage={currentPage}
             />
@@ -279,8 +225,8 @@ export default function Home() {
         </div>
         <Cards
           pokemones={pokemones}
-          pokemonsOfPagina={pokemonsOfPagina}
-          estadoFiltro={estadoFiltro}
+          pokemonsPaginated={pokemonsPaginated}
+          filterStatus={filterStatus}
         />
       </div>
     </div>

@@ -7,16 +7,16 @@ import "./styles.css";
 
 const apiUrl = process.env.REACT_APP_API;
 
-export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
-  // for uppercase name "Pokemon"
+export default function Card({ nombre, imgurl, tipos, Id }) {
+  // Uppercase name "Pokemon"
   const name = nombre[0].toUpperCase() + nombre.slice(1);
 
-  const [pokeData, setPokeData] = useState();
+  const [pokeStats, setPokeStats] = useState();
 
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      axios(`${apiUrl}/pokemons/${Id}`).then((res) => setPokeData({ ...res.data }));
+      axios(`${apiUrl}/pokemons/${Id}`).then((res) => setPokeStats({ ...res.data }));
     }
     return () => {
       mounted = false;
@@ -27,7 +27,12 @@ export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
     <div className={"card " + switchBgStyle(tipos[0])}>
       <div className="card--typesAndId">
         <div className="card--typesAndId_types">
-          {tipos && tipos.map((p) => <span className={switchTypeStyle(p) + " type"}>{p}</span>)}
+          {tipos &&
+            tipos.map((p, i) => (
+              <span key={i + "typesAndId_types"} className={switchTypeStyle(p) + " type"}>
+                {p}
+              </span>
+            ))}
         </div>
         <span className="">#{pad(Id)}</span>
       </div>
@@ -36,7 +41,7 @@ export default function Card({ nombre, imgurl, tipos, Id, ataque }) {
         <h2 className="card--Center_pokeName">{name}</h2>
 
         {/* TODO: agregar un componente loader como fallback del componente  CardStats */}
-        <Suspense fallback={<></>}>{pokeData && <CardStats pokeData={pokeData} />}</Suspense>
+        <Suspense fallback={<></>}>{pokeStats && <CardStats pokeData={pokeStats} />}</Suspense>
 
         <NavLink to={`/home/pokemons/${Id}`} className="card--Center_details">
           Ver detalles
