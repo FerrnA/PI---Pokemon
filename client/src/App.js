@@ -4,7 +4,7 @@ import RoutesNav from "./components/RoutesNav";
 import LandingPage from "./pages/LandingPage/LandingPage.js";
 import FormCreate from "./pages/FormCreate/index.js";
 import PokemonDetail from "./pages/PokemonDetail/index.js";
-import Home from "./components/Home/index.js";
+import Home from "./pages/Home/index.js";
 
 function App() {
   return (

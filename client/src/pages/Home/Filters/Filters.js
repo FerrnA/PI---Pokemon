@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { getPokemons } from "../../redux/actions";
-import SearchBar from "./SearchBar/SearchBar";
+import { getPokemons } from "../../../redux/actions";
 import "./styles.css";
 
 function Filters({
@@ -93,9 +92,6 @@ function Filters({
         >
           Get pokemons
         </button>
-      </div>
-      <div>
-        <SearchBar />
       </div>
     </div>
   );

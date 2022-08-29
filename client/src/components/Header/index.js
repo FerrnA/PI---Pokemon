@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import SearchBar from "./SearchBar/SearchBar";
 import "./styles.css";
 
 function Header() {
@@ -24,6 +25,9 @@ function Header() {
               Crear Pokemon
             </NavLink>
           </h3>
+        </div>
+        <div>
+          <SearchBar />
         </div>
       </nav>
     </header>

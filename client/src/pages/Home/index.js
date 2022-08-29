@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons, getTypes } from "../../redux/actions/index";
 import { mergeSort } from "./functions";
-import Filters from "../Header/Filters";
+import Filters from "./Filters/Filters";
 import Paginate from "./Paginate";
-import Cards from "../Cards";
+import Cards from "../../components/Cards";
 import "./styles.css";
 
 export default function Home() {
@@ -213,7 +213,7 @@ export default function Home() {
           checkedTypes,
         }}
       />
-      <div>
+      <div style={{ flexGrow: "1", overflow: "hidden" }}>
         <div className="home--paginateContainer">
           {typeof pokemonsPaginated === "object" && (
             <Paginate
