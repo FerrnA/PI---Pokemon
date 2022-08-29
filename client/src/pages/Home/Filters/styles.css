@@ -1,13 +1,25 @@
 /* Filters styles */
 .filters {
   width: 100%;
-  height: 100px;
+  height: 80px;
   padding: 0.5rem 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   font-size: 1.05em;
   font-weight: 700;
+  background-color: #f1d823;
+}
+.filters--byTypes,
+.filters--created,
+.filters--sort {
+  flex-grow: 1;
+}
+.filters--byTypes label,
+.filters--created label,
+.filters--sort label {
+  display: block;
+  text-align: center;
 }
 .filters--byTypes_selected {
   width: 80%;

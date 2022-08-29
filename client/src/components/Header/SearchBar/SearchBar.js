@@ -10,8 +10,10 @@ export default function SearchBar() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(getPokemonName(status.search));
-    setStatus({ search: "" });
+    if (status.length > 0) {
+      dispatch(getPokemonName(status.search));
+      setStatus({ search: "" });
+    }
   }
   return (
     <div>
@@ -19,11 +21,26 @@ export default function SearchBar() {
         type="text"
         name="search"
         value={status.search}
-        onChange={(e) => handleChange(e)}
         placeholder="Pokemon name.."
+        style={{
+          borderRadius: "0.4rem 0 0 0.4rem",
+          border: "none",
+          height: "1.8rem",
+          width: "27ch",
+        }}
+        onChange={(e) => handleChange(e)}
+        onKeyDown={(event) => event.key === "Enter" && handleSubmit(event)}
       ></input>
-      <button type="submit" onClick={(e) => handleSubmit(e)}>
-        BUSCAR
+      <button
+        type="submit"
+        style={{
+          borderRadius: "0 0.3rem 0.3rem 0",
+          border: "none",
+          height: "1.8rem",
+        }}
+        onClick={(e) => handleSubmit(e)}
+      >
+        🔎 Search
       </button>
     </div>
   );

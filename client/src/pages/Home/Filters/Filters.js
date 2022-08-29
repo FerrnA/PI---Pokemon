@@ -20,7 +20,7 @@ function Filters({
 
   return (
     <div name="filters" className="filters">
-      <div>
+      <div className="filters--created">
         <label>&emsp;Search by Created&ensp;</label>
         <select
           name="selectDecreados"
@@ -33,7 +33,7 @@ function Filters({
           <option value="Sin pokemones creados">Sin pokemones creados</option>
         </select>
       </div>
-      <div>
+      <div className="filters--byTypes">
         <label>&emsp;Search by Pokemon types&ensp;</label>
         <select
           name="selectDetipos"
@@ -64,7 +64,7 @@ function Filters({
             ))}
         </ul>
       </div>
-      <div>
+      <div className="filters--sort">
         <label>&emsp;Sort by&ensp;</label>
         <select
           name="selectDeSort"

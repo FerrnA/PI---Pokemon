@@ -213,16 +213,16 @@ export default function Home() {
           checkedTypes,
         }}
       />
-      <div style={{ flexGrow: "1", overflow: "hidden" }}>
-        <div className="home--paginateContainer">
-          {typeof pokemonsPaginated === "object" && (
-            <Paginate
-              numberOfPokemons={length}
-              setCurrentPage={setCurrentpage}
-              currentPage={currentPage}
-            />
-          )}
-        </div>
+      <div className="home--paginateContainer">
+        {Object.keys(pokemonsPaginated).length !== 0 && (
+          <Paginate
+            numberOfPokemons={length}
+            setCurrentPage={setCurrentpage}
+            currentPage={currentPage}
+          />
+        )}
+      </div>
+      <div style={{ flexGrow: "1" }}>
         <Cards
           pokemones={pokemones}
           pokemonsPaginated={pokemonsPaginated}

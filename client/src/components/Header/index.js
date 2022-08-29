@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar/SearchBar";
+import logo from "../../images/pokeapi.png";
 import "./styles.css";
 
 function Header() {
@@ -11,7 +12,10 @@ function Header() {
   return (
     <header className="header">
       <nav className="header--nav">
-        <div>
+        <NavLink to="/home">
+          <img src={logo} alt="pokeapi_logo" height={50} />
+        </NavLink>
+        <div className="header--nav_links">
           <h3>
             <NavLink to="/home" className={splitLocation[2] === undefined ? "active" : "nonactive"}>
               Home
