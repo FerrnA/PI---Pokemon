@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { switchTypeStyle } from "../../../components/Cards/ItemCard/functions";
 import { getPokemons } from "../../../redux/actions";
+import { v4 as uuidv4 } from "uuid";
 import "./styles.css";
 
 function Filters({
@@ -9,7 +11,6 @@ function Filters({
   handleFilterByType,
   handleFilterBySort,
   handleCheckButton,
-  selectCreated,
   selectTypes,
   selectSort,
   setFilterStatus,
@@ -22,41 +23,51 @@ function Filters({
     <div name="filters" className="filters">
       <div className="filters--created">
         <label>&emsp;Search by Created&ensp;</label>
-        <select
-          name="selectDecreados"
-          ref={selectCreated}
-          defaultValue=""
-          onChange={(e) => handleFilterByCreated(e)}
-        >
-          <option></option>
-          <option value="Pokemones creados">Pokemones creados</option>
-          <option value="Sin pokemones creados">Sin pokemones creados</option>
-        </select>
+        <span>
+          <button
+            type="radio"
+            value="Pokemones creados"
+            className="filters--created-optionBtn"
+            onClick={(e) => handleFilterByCreated(e)}
+          >
+            Pokemones creados
+          </button>
+          <button
+            type="radio"
+            value="Sin pokemones creados"
+            className="filters--created-optionBtn"
+            onClick={(e) => handleFilterByCreated(e)}
+          >
+            Sin pokemones creados
+          </button>
+        </span>
       </div>
-      <div className="filters--byTypes">
-        <label>&emsp;Search by Pokemon types&ensp;</label>
-        <select
-          name="selectDetipos"
-          ref={selectTypes}
-          defaultValue=""
-          onChange={(e) => handleFilterByType(e)}
-        >
-          Tipos de pokemon
-          <option></option>
-          {types.length &&
-            types.map((t, i) => (
-              <option key={i + "byTypes"} value={t.name}>
-                {t.name}
-              </option>
-            ))}
-        </select>
-        <ul className="filters--byTypes_selected">
+      <div className="filters--types">
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <label style={{ display: "inline" }}>&emsp;Search by Pokemon types&ensp;</label>
+          <select
+            name="selectDetipos"
+            ref={selectTypes}
+            defaultValue=""
+            onChange={(e) => handleFilterByType(e)}
+          >
+            Tipos de pokemon
+            <option></option>
+            {types.length &&
+              types.map((t) => (
+                <option key={uuidv4()} value={t.name}>
+                  {t.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <ul className="filters--types-selected">
           {checkedTypes.length > 0 &&
-            checkedTypes.map((t, i) => (
-              <p key={i + "byTypes_selected"}>
+            checkedTypes.map((t) => (
+              <p key={uuidv4()} className={switchTypeStyle(t)}>
                 <button
                   type="button"
-                  className="checkButton"
+                  className="filters--types-selected-checkBtn"
                   onClick={(e) => handleCheckButton(e, t)}
                 ></button>
                 {t}
@@ -84,6 +95,7 @@ function Filters({
           ↑↓
         </button>
         <button
+          className="filters--refresh"
           onClick={() => {
             dispatch(getPokemons());
             setFilterStatus("");

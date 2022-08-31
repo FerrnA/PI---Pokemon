@@ -11,10 +11,11 @@ body {
 }
 
 #root {
-  background-image: url(background.png);
+  /* background-image: url(pokenode-ts.jpg);
   background-position: 0 50%;
   background-size: cover;
-  background-origin: border-box;
+  background-origin: border-box; */
+  background-color: #b4b49c;
   width: 100vw;
   height: 100%;
 }

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { pad, switchBgStyle, switchTypeStyle } from "./functions";
 import CardStats from "./CardStats";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import "./styles.css";
 
 const apiUrl = process.env.REACT_APP_API;
@@ -13,6 +14,7 @@ export default function Card({ nombre, imgurl, tipos, Id }) {
 
   const [pokeStats, setPokeStats] = useState();
 
+  // fetch App for pokemon's Stats
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -28,8 +30,8 @@ export default function Card({ nombre, imgurl, tipos, Id }) {
       <div className="card--typesAndId">
         <div className="card--typesAndId_types">
           {tipos &&
-            tipos.map((p, i) => (
-              <span key={i + "typesAndId_types"} className={switchTypeStyle(p) + " type"}>
+            tipos.map((p) => (
+              <span key={uuidv4()} className={switchTypeStyle(p) + " type"}>
                 {p}
               </span>
             ))}

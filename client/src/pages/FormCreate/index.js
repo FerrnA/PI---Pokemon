@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { switchTypeStyle } from "../../components/Cards/ItemCard/functions";
 import { getTypes, createPokemon } from "../../redux/actions/index";
-import f from "./index.module.css";
+import { v4 as uuidv4 } from "uuid";
+import "./styles.css";
 
 let initialStatus = {
   name: "",
@@ -28,9 +30,10 @@ export default function FormCreate() {
 
   function handleChange(e) {
     let value = e.target.value;
-    const named = e.target.name;
-    if (named !== "name" && named !== "tipos") value = value.replace(/[a-zA-Z]+/, "");
-    if (named === "tipos") {
+    const name = e.target.name;
+    if (name !== "name" && name !== "tipos" && name !== "imgurl")
+      value = value.replace(/[a-zA-Z]+/, "");
+    if (name === "tipos") {
       if (!status.tipos.includes(value)) {
         setStatus({
           ...status,
@@ -40,7 +43,7 @@ export default function FormCreate() {
     } else
       setStatus({
         ...status,
-        [named]: value,
+        [name]: value,
       });
   }
 
@@ -75,90 +78,137 @@ export default function FormCreate() {
   }
 
   return (
-    <div className={f.divform}>
-      <form style={{ display: "flex", flexDirection: "column", width: "200px" }}>
+    <div className="formCreate">
+      <form style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
         <div>
-          <label>&emsp;Nombre</label>
-          <input type="text" name="name" value={status.name} onChange={(e) => handleChange(e)} />
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="name"
+              value={status.name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Nombre</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="fuerza"
+              value={status.fuerza}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Fuerza</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="defensa"
+              value={status.defensa}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Defensa</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="vida"
+              value={status.vida}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Vida</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="velocidad"
+              value={status.velocidad}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Velocidad</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="altura"
+              value={status.altura}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Altura</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="peso"
+              value={status.peso}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Peso</label>
+          </div>
         </div>
-        <div>
-          <label>&emsp;Fuerza</label>
-          <input
-            type="text"
-            name="fuerza"
-            value={status.fuerza}
-            onChange={(e) => handleChange(e)}
-          />
+        <div
+          style={{
+            maxWidth: "70%",
+          }}
+        >
+          <div className="input-container">
+            <input
+              type="text"
+              required
+              name="imgurl"
+              value={status.imgurl}
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Imagen</label>
+          </div>
+          <div>
+            <label style={{ color: "white" }}>Tipo/s</label>
+            <select
+              className="custom-select"
+              name="tipos"
+              defaultValue=""
+              ref={inputTipos}
+              onChange={(e) => handleChange(e)}
+            >
+              <option></option>
+              {types.length && types.map((t) => <option value={t.name}>{t.name}</option>)}
+            </select>
+            <ul className="typesselected">
+              {status.tipos.length > 0 &&
+                status.tipos.map((t) => (
+                  <p key={t}>
+                    <button
+                      type="button"
+                      className="botontipos"
+                      onClick={(e) => handleButtonClick(e, t)}
+                    ></button>
+                    {t}
+                  </p>
+                ))}
+            </ul>
+          </div>
+          <button type="submit" className="formCreate--submitBtn" onClick={(e) => handleSubmit(e)}>
+            Crear
+          </button>
+          <div className="formCreate--pokemon">
+            {status.tipos && (
+              <div className="formCreate--pokemon-types">
+                {status.tipos.map((p) => (
+                  <span key={uuidv4()} className={switchTypeStyle(p) + " type"}>
+                    {p}
+                  </span>
+                ))}
+              </div>
+            )}
+            {status.imgurl && <img src={status.imgurl} alt="" width={200} />}
+          </div>
         </div>
-        <div>
-          <label>&emsp;Defensa</label>
-          <input
-            type="text"
-            name="defensa"
-            value={status.defensa}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>&emsp;Vida</label>
-          <input type="text" name="vida" value={status.vida} onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>&emsp;Velocidad</label>
-          <input
-            type="text"
-            name="velocidad"
-            value={status.velocidad}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>&emsp;Altura</label>
-          <input
-            type="text"
-            name="altura"
-            value={status.altura}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>&emsp;Peso</label>
-          <input type="text" name="peso" value={status.peso} onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>&emsp;Imagen</label>
-          <input
-            type="text"
-            name="imgurl"
-            value={status.imgurl}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-
-        <label>&emsp;Tipo/s</label>
-        <select name="tipos" defaultValue="" ref={inputTipos} onChange={(e) => handleChange(e)}>
-          {/* 
-        <option value="default" selected disabled hidden></option> */}
-          <option></option>
-          {types.length && types.map((t) => <option value={t.name}>{t.name}</option>)}
-        </select>
-        <ul className={f.typesselected}>
-          {status.tipos.length > 0 &&
-            status.tipos.map((t) => (
-              <p key={t}>
-                <button
-                  type="button"
-                  className={f.botontipos}
-                  onClick={(e) => handleButtonClick(e, t)}
-                ></button>
-                {t}
-              </p>
-            ))}
-        </ul>
-
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
-          Submit
-        </button>
       </form>
     </div>
   );

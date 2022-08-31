@@ -10,35 +10,90 @@
   font-weight: 700;
   background-color: #f1d823;
 }
-.filters--byTypes,
+.filters--types,
 .filters--created,
 .filters--sort {
   flex-grow: 1;
+  padding: 0.3rem 1rem;
+  border-right: 1px solid rgb(0, 117, 190);
+  max-width: 33%;
 }
-.filters--byTypes label,
+.filters--types label,
 .filters--created label,
 .filters--sort label {
   display: block;
   text-align: center;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 1rem;
+  color: rgb(0, 117, 190);
 }
-.filters--byTypes_selected {
+
+/* ----- */
+.filters--created {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.filters--created-optionBtn {
+  border: none;
+  padding: 0.1rem 0.4rem;
+  margin: 0 0.2rem;
+  border-radius: 0.4rem;
+  color: #141414;
+  background-color: white;
+  box-shadow: 10px 10px rgb(0, 117, 190);
+}
+.filters--created-optionBtn:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+/* ------------ */
+
+/* ----- */
+.filters--types-selected {
   width: 80%;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   align-items: space-between;
-  justify-content: space-between;
   font-size: 0.8em;
 }
-/* Types filter, check 'type' button */
-.checkButton {
+.filters--types-selected p {
+  margin-right: 0.5rem;
+}
+/* Types map check button */
+.filters--types-selected-checkBtn {
   height: 10px;
   width: 10px;
   border: 1px outset blue;
   background-color: lightBlue;
   cursor: pointer;
 }
-.checkButton:hover {
+.filters--types-selected-checkBtn:hover {
   background-color: blue;
   color: white;
 }
+/* ------------ */
+
+/* ----- */
+.filters--refresh {
+}
+.filters--refresh:hover {
+  cursor: pointer;
+}
+/* ------------ */
+
+/* .filters_optionBtn::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  z-index: 99;
+  margin-left: 0.3rem;
+  width: 6px;
+  height: 100%;
+  color: #141414;
+  background-color: #141414;
+} */
+/* ------------ */

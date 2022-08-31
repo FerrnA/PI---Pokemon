@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons, getTypes } from "../../redux/actions/index";
 import { mergeSort } from "./functions";
-import Filters from "./Filters/Filters";
+import Filters from "./Filters";
 import Paginate from "./Paginate";
 import Cards from "../../components/Cards";
 import "./styles.css";
@@ -16,7 +16,6 @@ export default function Home() {
 
   const selectSort = useRef();
   const selectTypes = useRef();
-  const selectCreated = useRef();
 
   useEffect(() => {
     dispatch(getPokemons());
@@ -151,7 +150,6 @@ export default function Home() {
     if (filterStatus !== "Filtrado por Tipos") {
       setFilterStatus("Filtrado por Tipos");
       selectSort.current.value = ""; // clean states and focus first page
-      selectCreated.current.value = ""; //
       setCurrentpage(1);
     }
     if (!checkedTypes.includes(e.target.value)) {
@@ -175,7 +173,6 @@ export default function Home() {
     e.preventDefault();
     if (!filterStatus.includes("Sort")) {
       selectTypes.current.value = ""; // clean states and focus first page
-      selectCreated.current.value = ""; //
       setCheckedTypes([]);
       setCurrentpage(1);
     }
@@ -205,7 +202,6 @@ export default function Home() {
           handleFilterByType,
           handleFilterBySort,
           handleCheckButton,
-          selectCreated,
           selectTypes,
           selectSort,
           setFilterStatus,
