@@ -18,9 +18,6 @@ router.get("/", async function (req, res) {
         .catch((err) => res.status(404).send({ message: "Pokemon no encontrado" }));
     }
   } else {
-    /* let pokemons20 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20'}).then(resp => resp.data);
-    let pokemons40 = await axios({url: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20'}).then(resp => resp.data);
-    let pokemons = [...pokemons20.results, ...pokemons40.results]; */
     let pokemon20 = new Promise(function (resolve, reject) {
       axios({ url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20" }).then((resp) =>
         resolve(resp.data)
@@ -116,6 +113,44 @@ router.get("/:idPokemon", async function (req, res) {
         .then((datos) => res.status(200).send(apipkadatos(datos)))
         .catch((err) => res.status(404).send({ message: "Pokemon no existente" }));
     }
+  }
+});
+
+router.get("/species/:id", async function (req, res) {
+  const { id } = req.params;
+
+  try {
+    const data = await axios({
+      url: `https://pokeapi.co/api/v2/pokemon-species/${id}`,
+    }).then((res) => res.data);
+
+    const text_description = data.flavor_text_entries[6].flavor_text;
+
+    const evolution_chain = await axios({ url: data.evolution_chain.url }).then((res) => res.data);
+
+    const first_evolution = evolution_chain.chain.species.name;
+    const second_evolution = evolution_chain.chain.evolves_to[0]?.species.name;
+    const third_evolution = evolution_chain.chain.evolves_to[0]?.evolves_to[0]?.species.name;
+
+    const evolutions = [first_evolution];
+    if (second_evolution) evolutions.push(second_evolution);
+    if (third_evolution) evolutions.push(third_evolution);
+
+    let requests = evolutions.map(
+      (name) =>
+        new Promise(function (resolve, reject) {
+          axios({ url: `https://pokeapi.co/api/v2/pokemon/${name}` })
+            .then((res) => res.data)
+            .then((res) => resolve(apipkadatos(res)))
+            .catch((err) => console.log(err));
+        })
+    );
+
+    let evolutions_map_data = await Promise.all(requests);
+
+    return res.json({ data: { evolutions_map_data }, text_description });
+  } catch (err) {
+    return res.status(500).json({ msg: "There's been an error in the server" });
   }
 });
 
