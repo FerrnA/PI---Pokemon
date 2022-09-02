@@ -64,6 +64,10 @@
   filter: drop-shadow(0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.5));
   text-align: center;
   object-fit: cover;
+transition: 1s all;
+}
+.card--Center_img:hover {
+  transform: translateY(-60%) scale(1.05)
 }
 
 /* h2 Pokemon name */
@@ -80,15 +84,20 @@
   color: #313131;
   font-size: 0.9rem;
   line-height: 0.9rem;
+  transition: 0.3s all;
 }
 
 /* Navlink Normalize styles */
 .card--Center_details {
   text-decoration: none;
 }
+.card--Center_details:visited {
+  color: #313131;
+}
 .card--Center_details:hover {
   cursor: pointer;
 }
-.card--Center_details:visited {
-  color: #313131;
+
+.card--Center_details:hover {
+  color: #141414;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import "./styles.css";
 
 export default function Paginate({ numberOfPokemons, setCurrentPage, currentPage }) {
   // This will create an array of sekunted numbers starting from 1 to render the pages numbers necesary to show the total of pokemons for the current filter/search/initialHomePage taking into account 12 pokemons per page(9 for the first as is the 3 evolutions of the 3 main pokemons of Pókemon)
@@ -11,8 +12,8 @@ export default function Paginate({ numberOfPokemons, setCurrentPage, currentPage
   }
 
   return (
-    <div style={{ margin: "0.5rem 0" }}>
-      <div>
+    <div className="paginate">
+      <span className="paginate--text">
         {numberOfPokemons <= 9
           ? `1-${numberOfPokemons}`
           : currentPage === 1
@@ -21,21 +22,23 @@ export default function Paginate({ numberOfPokemons, setCurrentPage, currentPage
               currentPage * 12 - 3 > numberOfPokemons ? numberOfPokemons : `${currentPage * 12 - 3}`
             }`}
         {` of ${numberOfPokemons}`}
-        <button
-          type="button"
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1 ? true : false}
-        >
-          <MdOutlineArrowBackIosNew />
-        </button>
-        <button
-          type="button"
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === numberOfPages.at(-1) ? true : false}
-        >
-          <MdOutlineArrowForwardIos />
-        </button>
-      </div>
+      </span>
+      <button
+        type="button"
+        onClick={() => setCurrentPage(currentPage - 1)}
+        disabled={currentPage === 1 ? true : false}
+        className="paginate--buttons"
+      >
+        <MdOutlineArrowBackIosNew />
+      </button>
+      <button
+        type="button"
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={currentPage === numberOfPages.at(-1) ? true : false}
+        className="paginate--buttons"
+      >
+        <MdOutlineArrowForwardIos />
+      </button>
     </div>
   );
 }
