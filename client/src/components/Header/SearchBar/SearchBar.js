@@ -10,7 +10,7 @@ export default function SearchBar() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    if (status.length > 0) {
+    if (status.search.length > 0) {
       dispatch(getPokemonName(status.search));
       setStatus({ search: "" });
     }
@@ -30,9 +30,9 @@ export default function SearchBar() {
         }}
         onChange={(e) => handleChange(e)}
         onKeyDown={(event) => event.key === "Enter" && handleSubmit(event)}
-      ></input>
+      />
       <button
-        type="submit"
+        type="button"
         style={{
           borderRadius: "0 0.3rem 0.3rem 0",
           border: "none",

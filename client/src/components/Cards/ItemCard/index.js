@@ -1,16 +1,16 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { pad, switchBgStyle, switchTypeStyle } from "../../utils/colours/functions";
 import CardStats from "./CardStats";
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { pad, switchBgStyle, switchTypeStyle } from "../../utils/colours/functions";
+import { upperCaseName } from "../../utils/functions";
+import axios from "axios";
 import "./styles.css";
 
 const apiUrl = process.env.REACT_APP_API;
 
 export default function Card({ nombre, imgurl, tipos, Id }) {
-  // Uppercase name "Pokemon"
-  const name = nombre[0].toUpperCase() + nombre.slice(1);
+  const name = upperCaseName(nombre);
 
   const [pokeStats, setPokeStats] = useState();
 
