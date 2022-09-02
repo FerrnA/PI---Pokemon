@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getPokemonDetail } from "../../redux/actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import pd from "./index.module.css";
+import "./styles.css";
 
 export default function PokemonDetail() {
   const dispatch = useDispatch();
@@ -13,23 +13,23 @@ export default function PokemonDetail() {
   }, [dispatch, pokemonID]);
 
   return (
-    <div className={pd.pokemondata}>
-      <div className={pd.carddatastyle}>
+    <div className="pokemonDetail">
+      <div className="pokemonDetail--container">
         {pokemon.name && (
-          <ul className={pd.divcarddata}>
-            <div className={pd.divdata}>
+          <ul className="pokemonDetail--details">
+            <div className="pokemonDetail--details-div">
               <li>ID: {pokemon.id}</li>
               <li>Name: {pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</li>
               <li>Altura: {pokemon.altura}</li>
               <li>Peso: {pokemon.peso}</li>
             </div>
-            <div className={pd.divdata}>
+            <div className="pokemonDetail--details-div">
               <li>Velocidad: {pokemon.velocidad}</li>
               <li>Vida: {pokemon.vida}</li>
               <li>Fuerza: {pokemon.fuerza}</li>
               <li>Defensa: {pokemon.defensa}</li>
             </div>
-            <div className={pd.divdata}>
+            <div className="pokemonDetail--details-div">
               <div style={{ marginTop: "4em" }}>
                 <li>
                   Tipo/s:

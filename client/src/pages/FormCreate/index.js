@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { switchTypeStyle } from "../../components/Cards/ItemCard/functions";
+import { switchTypeStyle } from "../../components/utils/colours/functions";
 import { getTypes, createPokemon } from "../../redux/actions/index";
 import { v4 as uuidv4 } from "uuid";
 import "./styles.css";

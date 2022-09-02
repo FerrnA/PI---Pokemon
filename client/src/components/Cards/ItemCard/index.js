@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { pad, switchBgStyle, switchTypeStyle } from "./functions";
+import { pad, switchBgStyle, switchTypeStyle } from "../../utils/colours/functions";
 import CardStats from "./CardStats";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
