@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getPokemonName } from "../../../redux/actions/index";
 import { useDispatch } from "react-redux";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [status, setStatus] = useState({ search: "" });
   function handleChange(e) {
     setStatus({ search: e.target.value });
@@ -13,8 +16,10 @@ export default function SearchBar() {
     if (status.search.length > 0) {
       dispatch(getPokemonName(status.search));
       setStatus({ search: "" });
+      if (location.pathname !== "/home") navigate("/home", { state: { onsearch: true } });
     }
   }
+
   return (
     <div>
       <input

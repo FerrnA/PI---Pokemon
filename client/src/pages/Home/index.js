@@ -6,9 +6,11 @@ import Filters from "./Filters";
 import Paginate from "./Paginate";
 import Cards from "../../components/Cards";
 import "./styles.css";
+import { useLocation } from "react-router-dom";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const location = useLocation();
   let types = useSelector((state) => state.types);
   const pokemones = useSelector((state) => state.pokemons);
 
@@ -18,8 +20,14 @@ export default function Home() {
   const selectTypes = useRef();
 
   useEffect(() => {
-    dispatch(getPokemons());
-    dispatch(getTypes());
+    let mounted = true;
+    // checking if is mounted because of search too
+    if (mounted && !location.state?.onsearch) {
+      dispatch(getPokemons());
+      dispatch(getTypes());
+    }
+    return () => (mounted = false);
+    //eslint-disable-next-line
   }, [dispatch]);
 
   const [filterStatus, setFilterStatus] = useState("");

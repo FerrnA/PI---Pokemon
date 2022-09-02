@@ -177,12 +177,17 @@ export default function FormCreate() {
               onChange={(e) => handleChange(e)}
             >
               <option></option>
-              {types.length && types.map((t) => <option value={t.name}>{t.name}</option>)}
+              {types.length &&
+                types.map((t) => (
+                  <option key={uuidv4()} value={t.name}>
+                    {t.name}
+                  </option>
+                ))}
             </select>
             <ul className="typesselected">
               {status.tipos.length > 0 &&
                 status.tipos.map((t) => (
-                  <p key={t}>
+                  <p key={uuidv4()}>
                     <button
                       type="button"
                       className="botontipos"
