@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const path = require("path");
 
 //const { Pokemon } = require('../models/Pokemon.js');
 //const { Tipo } = require('../models/Tipo.js');
