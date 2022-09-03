@@ -6,6 +6,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store/index.js";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND;
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = `${process.env.REACT_APP_BACKEND}`;
 
 ReactDOM.render(
   <Provider store={store}>

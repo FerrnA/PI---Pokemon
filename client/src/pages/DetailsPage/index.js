@@ -6,13 +6,11 @@ import { upperCaseName } from "../../components/utils/functions";
 import pokeball from "../../images/pokeball.png";
 import "./styles.css";
 
-const apiUrl = process.env.REACT_APP_API;
-
 function DetailsPage() {
   const { id } = useParams();
   const [details, setDetails] = useState();
   const getDetails = async () => {
-    const { data } = await axios.get(`${apiUrl}/pokemons/species/${id}`);
+    const { data } = await axios.get(`pokemons/species/${id}`);
     setDetails(data);
   };
 

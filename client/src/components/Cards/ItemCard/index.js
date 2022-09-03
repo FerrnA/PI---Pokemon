@@ -7,8 +7,6 @@ import { upperCaseName } from "../../utils/functions";
 import axios from "axios";
 import "./styles.css";
 
-const apiUrl = process.env.REACT_APP_API;
-
 export default function Card({ nombre, imgurl, tipos, Id }) {
   const name = upperCaseName(nombre);
 
@@ -18,7 +16,7 @@ export default function Card({ nombre, imgurl, tipos, Id }) {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      axios(`${apiUrl}/pokemons/${Id}`).then((res) => setPokeStats({ ...res.data }));
+      axios(`pokemons/${Id}`).then((res) => setPokeStats({ ...res.data }));
     }
     return () => {
       mounted = false;
