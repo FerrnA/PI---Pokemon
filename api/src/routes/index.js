@@ -5,7 +5,7 @@ const path = require("path");
 //const { Tipo } = require('../models/Tipo.js');
 
 router.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "/index.html"));
+  res.sendFile(path.join(__dirname, "/../", "build", "/index.html"));
 });
 
 module.exports = {
