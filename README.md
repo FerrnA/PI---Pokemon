@@ -51,11 +51,11 @@ El boilerplate cuenta con dos carpetas: `api` y `client`. En estas carpetas esta
 En `api` crear un archivo llamado: `.env` que tenga la siguiente forma:
 
 ```
-API_CLIENT_URL=puerto-del-Cliente
+API_CLIENT_URL=puertoDelCliente
 DB_USER=usuariodepostgres
 DB_PASSWORD=passwordDePostgres
 DB_HOST=localhost
-DB_NAME=dbname
+DB_NAME=pokemon
 ```
 En `client` crear un archivo llamado: `.env` que tenga la siguiente forma:
 
