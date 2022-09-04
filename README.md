@@ -16,6 +16,10 @@
 - Aprender y practicar el workflow de GIT.
 - Usar y practicar testing.
 
+## Deployment
+
+Esta app se encuentra deployada en vercel frontend (https://pokeapi-fer.vercel.app), y en heroku node express server (https://pokeapi-fer.herokuapp.com)
+
 ## Horarios y Fechas
 
 El proyecto tendrá una duración máxima de tres semanas. En el caso de que completan todas las tareas antes de dicho lapso podrán avisar a su Instructor para coordinar una fecha de presentación del trabajo (DEMO).
@@ -47,9 +51,16 @@ El boilerplate cuenta con dos carpetas: `api` y `client`. En estas carpetas esta
 En `api` crear un archivo llamado: `.env` que tenga la siguiente forma:
 
 ```
+API_CLIENT_URL=puerto-del-Cliente
 DB_USER=usuariodepostgres
 DB_PASSWORD=passwordDePostgres
 DB_HOST=localhost
+DB_NAME=dbname
+```
+En `client` crear un archivo llamado: `.env` que tenga la siguiente forma:
+
+```
+REACT_APP_API=puerto-de-API
 ```
 
 Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. Este archivo va ser ignorado en la subida a github, ya que contiene información sensible (las credenciales).
