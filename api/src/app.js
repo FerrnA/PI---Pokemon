@@ -9,7 +9,7 @@ require('./db.js');
 
 const server = express();
 
-const clientUrl = 'https://pokeapi-fer.vercel.app/';
+const clientUrl = process.env.API_CLIENT_URL;
 
 server.name = 'API';
 
@@ -18,7 +18,7 @@ server.use(express.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://pokeapi-fer.vercel.app');
+  res.header('Access-Control-Allow-Origin', `${clientUrl}`);
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header(
     'Access-Control-Allow-Headers',
