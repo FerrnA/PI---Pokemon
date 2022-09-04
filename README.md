@@ -16,6 +16,10 @@
 - Aprender y practicar el workflow de GIT.
 - Usar y practicar testing.
 
+## Deployment
+
+Esta app se encuentra deployada en vercel frontend (https://pokeapi-fer.vercel.app), y en heroku node express server (https://pokeapi-fer.herokuapp.com)
+
 ## Horarios y Fechas
 
 El proyecto tendrá una duración máxima de tres semanas. En el caso de que completan todas las tareas antes de dicho lapso podrán avisar a su Instructor para coordinar una fecha de presentación del trabajo (DEMO).
